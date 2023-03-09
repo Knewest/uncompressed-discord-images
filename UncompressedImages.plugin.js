@@ -5,8 +5,8 @@
  * @authorId 332116671294734336
  * @authorLink https://github.com/Knewest
  * @version 0.0.1
- * @source 
- * @updateUrl 
+ * @source https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/main/UncompressedImages.plugin.js
+ * @updateUrl https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/main/UncompressedImages.plugin.js
  */
 
 

@@ -7,7 +7,7 @@ Another feature of this plugin is that it makes animated PNGs uploaded to the Di
 This is compatible with BetterDiscord as a plugin and/or can be executed in the console of the client.<br> 
 
 
-<br><br><br><br>
+<br><br><br>
 
 ## Comparisons:
 

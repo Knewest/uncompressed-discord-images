@@ -1,9 +1,12 @@
 # Uncompressed Discord Images Fix:
-Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP). Another feature of this plugin is that it makes animated PNGs uploaded to the Discord server playable within the client.
+<p>Discord's solution to previewing images is awful so by changing 'media.discordapp.net' <img align="right" img src="https://user-images.githubusercontent.com/94736474/226493486-f1beeff2-8377-4670-a535-180d1c5176c2.png" width="450"><br>
+links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP). 
+Another feature of this plugin is that it makes animated PNGs uploaded to the Discord server playable within the client.</p>
 
-This is compatible with BetterDiscord as a plugin and/or can be executed in the console of the client.
+This is compatible with BetterDiscord as a plugin and/or can be executed in the console of the client.<br> 
 
-<br>
+
+<br><br><br><br>
 
 ## Comparisons:
 

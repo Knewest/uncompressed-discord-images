@@ -2,7 +2,7 @@
  <img align="right" img src="https://user-images.githubusercontent.com/94736474/226493486-f1beeff2-8377-4670-a535-180d1c5176c2.png" width="450">
 <p>Discord's solution to previewing images is awful so by changing 'media.discordapp.net' 
 links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP).
-<br><s>Another feature of this plugin is that it makes animated PNGs uploaded to the Discord server playable within the client.</s><br>
+<br><s><sub>Another feature of this plugin is that it makes animated PNGs uploaded to the Discord server playable within the client.</sub></s><br>
 Discord has broken APNG support completely when they addressed the 'aCropalypse' vulnerbility.</p>
 
 This is compatible with BetterDiscord as a plugin and/or can be executed in the console of the client.<br> 

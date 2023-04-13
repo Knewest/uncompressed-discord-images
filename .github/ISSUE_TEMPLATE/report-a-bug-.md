@@ -1,7 +1,7 @@
 ---
-name: "[BUG] - <Tiny description of bug.>"
+name: Report a bug.
 about: Create a report to help us improve
-title: ''
+title: "[BUG] - <Tiny description of bug.>"
 labels: bug
 assignees: Knewest
 

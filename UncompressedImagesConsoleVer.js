@@ -1,3 +1,9 @@
+   module.exports = class name{
+     
+       load() { }
+       start() {
+
+
 const config = {
   attributes: true,
   childList: true,
@@ -7,13 +13,18 @@ const config = {
 
 const observer = new MutationObserver(callback);
 
-function replaceURLs(image) {
+function replaceURLs(image, callback) {
   if (!image.src.includes('.gif')) {
     setTimeout(function() {
       image.src = image.src.replace('https://media.discordapp.net/attachments', 'https://cdn.discordapp.com/attachments');
-    }, 125);
+      setImmediate(callback);
+    });
+  } else {
+    setImmediate(callback);
   }
 }
+
+
 
 function callback(mutationsList, observer) {
   for (const mutation of mutationsList) {
@@ -32,10 +43,20 @@ function callback(mutationsList, observer) {
 
 function runMutation() {
   const images = document.querySelectorAll('img[src^="https://media.discordapp.net/attachments"]');
-  images.forEach(function(image) {
-    replaceURLs(image);
-  });
+  let i = 0;
+
+  function processNextImage() {
+    if (i < images.length) {
+      replaceURLs(images[i], function() {
+        i++;
+        processNextImage();
+      });
+    }
+  }
+
+  processNextImage();
   observer.observe(document, config);
 }
+
 
 runMutation();

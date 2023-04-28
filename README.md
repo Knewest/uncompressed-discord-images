@@ -15,6 +15,7 @@ This is compatible with BetterDiscord as a plugin and/or can be executed in the 
 
 |**Image format:**|**Before fix:**|**After fix:**| 
 |:---:|:---:|:---:|
+|**PNG**|![PNGComparisonLQ1](https://cdn.discordapp.com/attachments/753561208073879642/1101597065953431652/wVUDsCCrsD_LQ_PNG.webp)|![PNGComparisonHQ1](https://cdn.discordapp.com/attachments/753561208073879642/1101597074463674449/wVUDsCCrsD_HQ_PNG.webp)|
 |**JPEG**|![JPGComparisonLQ1](https://user-images.githubusercontent.com/94736474/224312885-cb26264e-e2d0-404f-ae50-395bf81a54f1.png)|![JPGComparisonHQ1](https://user-images.githubusercontent.com/94736474/224315183-e5e5dc8b-16f7-4072-8fae-45a4ed904a21.png)|
 |**JPEG**|![JPGComparisonLQ2](https://user-images.githubusercontent.com/94736474/224315861-7ce2defa-ecaa-47be-8a14-a678aa71cc03.png)|![JPGComparisonHQ2](https://user-images.githubusercontent.com/94736474/224315883-0b9c87fa-7144-4916-ba07-67a0f5dc4c80.png)|
 |**WebP**|![WebPComparisonLQ1](https://user-images.githubusercontent.com/94736474/224316202-2410e3c6-8b3d-4784-aea8-7dee2ea36edd.png)|![WebPComparisonHQ1](https://user-images.githubusercontent.com/94736474/224316220-cb74424b-1ee3-4de7-85c4-444fa6703327.png)|

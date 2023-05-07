@@ -33,4 +33,4 @@ Something to note with these comparisons is that unless open the image in a brow
 
 This means that if you click on the image, even though the quality is a bit better, it is still compressed and not what the person sent, this is most prevelant with JPEG and WebP-- hence the examples provided.
 
-Some may ask why PNG was not provided, this is simply because I think it is a neglible difference, as it is the least effected by this problem (but still is). You are welcome to compare for yourself.
+Here is a guide on how to make BetterDiscord as easy as possible to install and use: https://gist.github.com/Knewest/ee59d3960e18e6d813c9221b54b36ab1

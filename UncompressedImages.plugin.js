@@ -2,7 +2,7 @@
  * @name Uncompressed Images
  * @author Knew
  * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP).
- * @version 3.0
+ * @version 3.1
  * @authorId 332116671294734336
  * @authorLink https://github.com/Knewest
  * @website https://twitter.com/KnewestLSEP
@@ -18,6 +18,7 @@ module.exports = class name {
   load() {}
 
   start() {
+	  
     const config = {
       attributes: true,
       childList: true,
@@ -115,7 +116,7 @@ module.exports = class name {
                 (node) =>
                   node.tagName === 'IMG' &&
                   node.src.startsWith('https://media.discordapp.net/attachments') &&
-                  !node.classList.contains('processed-image')
+                  !node.classList.contains('processed-image') 
               )
             );
 
@@ -126,15 +127,39 @@ module.exports = class name {
               });
             }
           });
-        } else if (
-          mutation.type === 'attributes' &&
-          mutation.attributeName === 'src'
-        ) {
+
+		} else if (
+		  mutation.type === 'attributes' &&
+		  mutation.attributeName === 'src'
+		) {
           if (!mutation.target.src.includes('.gif')) {
             replaceURLs();
           }
+
         }
       }
+    }
+
+	function applyMarginStyle() {
+	  const style = document.createElement('style');
+	  style.textContent = `
+		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy {
+		  margin: initial !important;
+		}
+	  `;
+	  document.head.appendChild(style);
+	  this.marginStyleElement = style;
+	}
+	
+    function createRemoveWidthStyleElement() {
+      const style = document.createElement('style');
+      style.textContent = `
+        .mediaAttachmentsContainer-1WGRWy {
+          width: initial !important;
+        }
+      `;
+      document.head.appendChild(style);
+      return style;
     }
 
     function runMutation() {
@@ -144,6 +169,8 @@ module.exports = class name {
     }
 
     runMutation();
+    applyMarginStyle.call(this);
+    this.removeWidthStyleElement = createRemoveWidthStyleElement();
     this.observer = observer;
   }
 
@@ -167,11 +194,21 @@ module.exports = class name {
       hiddenImages.forEach((image) => {
         image.style.display = '';
       });
+
+      if (this.marginStyleElement) {
+        this.marginStyleElement.remove();
+        this.marginStyleElement = null;
+      }
+
+      if (this.removeWidthStyleElement) {
+        this.removeWidthStyleElement.remove();
+        this.removeWidthStyleElement = null;
+      }
     }
   }
 };
 
 /**
-* Version 3.0 of Uncompressed Images
+* Version 3.1 of Uncompressed Images
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 */

@@ -1,4 +1,4 @@
-    const config = {
+const config = {
       attributes: true,
       childList: true,
       subtree: true,
@@ -122,6 +122,10 @@
 	function applyMarginStyle() {
 	  const style = document.createElement('style');
 	  style.textContent = `
+
+		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy {
+		  margin: initial !important;
+		}
 
 		.imageContainer-10XenG {
 			  display: flex !important;

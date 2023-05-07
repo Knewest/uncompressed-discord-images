@@ -1,10 +1,9 @@
 # Uncompressed Discord Images Fix:
- <img align="right" img src="https://cdn.discordapp.com/attachments/753561208073879642/1103895446004441088/ThumbnailForUncompressedImages.webp" width="450">
 <p>Discord's solution to previewing images is awful so by changing 'media.discordapp.net' 
 links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP).
-
-<s><sub><sub>Another feature of this plugin is that it makes animated PNGs uploaded to the Discord server playable within the client.</sub></s><br>
-<sub><sub>Discord has broken APNG support completely when they addressed the 'aCropalypse' vulnerbility.</sub></sub></p>
+<img align="right" img src="https://cdn.discordapp.com/attachments/753561208073879642/1103895446004441088/ThumbnailForUncompressedImages.webp" width="450">
+<br><s><sub>Another feature of this plugin is that it makes animated PNGs uploaded to the Discord server playable within the client.</sub></s><br>
+<sub>Discord has broken APNG support completely when they addressed the 'aCropalypse' vulnerbility.</sub><p>
 
 <sub>This is compatible with BetterDiscord as a plugin and/or can be executed in the console of the client.</sub><br> 
 <br><a href="https://github.com/Knewest/uncompressed-discord-images/releases">

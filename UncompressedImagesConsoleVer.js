@@ -1,4 +1,4 @@
-const config = {
+    const config = {
       attributes: true,
       childList: true,
       subtree: true,
@@ -122,13 +122,17 @@ const config = {
 	function applyMarginStyle() {
 	  const style = document.createElement('style');
 	  style.textContent = `
-		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy {
-		  margin: initial !important;
-		}
+
+		.imageContainer-10XenG {
+			  display: flex !important;
+			  align-items: center !important;
+			}
+		
 	  `;
 	  document.head.appendChild(style);
 	  this.marginStyleElement = style;
 	}
+
 	
     function createRemoveWidthStyleElement() {
       const style = document.createElement('style');
@@ -154,6 +158,6 @@ const config = {
   }
 
 /**
-* Version 3.1 of Uncompressed Images
+* Version 3.2 of Uncompressed Images
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 */

@@ -12,7 +12,7 @@ links to 'cdn.discordapp.com' links, we will no longer have blurry images (espec
 </a>
 
 
-<br><br><br>
+<br>
 
 ## Comparisons:
 

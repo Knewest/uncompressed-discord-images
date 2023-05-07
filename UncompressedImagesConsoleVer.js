@@ -1,4 +1,4 @@
-    const config = {
+const config = {
       attributes: true,
       childList: true,
       subtree: true,
@@ -95,7 +95,7 @@
                 (node) =>
                   node.tagName === 'IMG' &&
                   node.src.startsWith('https://media.discordapp.net/attachments') &&
-                  !node.classList.contains('processed-image')
+                  !node.classList.contains('processed-image') 
               )
             );
 
@@ -106,15 +106,39 @@
               });
             }
           });
-        } else if (
-          mutation.type === 'attributes' &&
-          mutation.attributeName === 'src'
-        ) {
+
+		} else if (
+		  mutation.type === 'attributes' &&
+		  mutation.attributeName === 'src'
+		) {
           if (!mutation.target.src.includes('.gif')) {
             replaceURLs();
           }
+
         }
       }
+    }
+
+	function applyMarginStyle() {
+	  const style = document.createElement('style');
+	  style.textContent = `
+		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy {
+		  margin: initial !important;
+		}
+	  `;
+	  document.head.appendChild(style);
+	  this.marginStyleElement = style;
+	}
+	
+    function createRemoveWidthStyleElement() {
+      const style = document.createElement('style');
+      style.textContent = `
+        .mediaAttachmentsContainer-1WGRWy {
+          width: initial !important;
+        }
+      `;
+      document.head.appendChild(style);
+      return style;
     }
 
     function runMutation() {
@@ -124,4 +148,12 @@
     }
 
     runMutation();
+    applyMarginStyle.call(this);
+    this.removeWidthStyleElement = createRemoveWidthStyleElement();
     this.observer = observer;
+  }
+
+/**
+* Version 3.1 of Uncompressed Images
+* Copyright (Boost Software License 1.0) 2023-2023 Knew
+*/

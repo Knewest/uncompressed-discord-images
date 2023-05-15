@@ -159,7 +159,6 @@ const config = {
     applyMarginStyle.call(this);
     this.removeWidthStyleElement = createRemoveWidthStyleElement();
     this.observer = observer;
-  }
 
 /**
 * Version 3.2 of Uncompressed Images

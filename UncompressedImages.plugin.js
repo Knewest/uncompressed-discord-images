@@ -1,8 +1,8 @@
 /**
  * @name Uncompressed Images
  * @author Knew
- * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP).
- * @version 3.2
+ * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
+ * @version 3.3
  * @authorId 332116671294734336
  * @authorLink https://github.com/Knewest
  * @website https://twitter.com/KnewestLSEP
@@ -69,8 +69,8 @@ module.exports = class name {
 			  try {
 				const aspectRatio =
 				  offscreenImage.naturalWidth / offscreenImage.naturalHeight;
-				const maxWidth = image.closest('.imageWrapper-2p5ogY').clientWidth;
-				const maxHeight = image.closest('.imageWrapper-2p5ogY').clientHeight;
+				const maxWidth = image.closest('.imageWrapper-oMkQl4').clientWidth;
+				const maxHeight = image.closest('.imageWrapper-oMkQl4').clientHeight;
 				let width = offscreenImage.naturalWidth;
 				let height = offscreenImage.naturalHeight;
 				if (width > maxWidth) {
@@ -85,9 +85,7 @@ module.exports = class name {
 				image.classList.add('processed-image');
 				image.style.width = `${width}px`;
 				image.style.height = `${height}px`;
-			  } catch (error) {
-				// Meaningless error that broke functionality if "fixed"...
-			  } finally {
+			  }  finally {
 				index++;
 				setImmediate(processImage);
 			  }
@@ -140,35 +138,25 @@ module.exports = class name {
       }
     }
 
-	function applyMarginStyle() {
-	  const style = document.createElement('style');
-	  style.textContent = `
-
-		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy {
-		  margin: initial !important;
-		}
-
-		.imageContainer-10XenG {
-			  display: flex !important;
-			  align-items: center !important;
-			}
-		
-	  `;
-	  document.head.appendChild(style);
-	  this.marginStyleElement = style;
-	}
-
-	
-    function createRemoveWidthStyleElement() {
-      const style = document.createElement('style');
-      style.textContent = `
-        .mediaAttachmentsContainer-1WGRWy {
-          width: initial !important;
-        }
-      `;
-      document.head.appendChild(style);
-      return style;
+function createUncompressedImagesCSSStyle() {
+  const style = document.createElement('style');
+  style.textContent = `
+  
+    .imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy {
+      margin: initial !important;
     }
+    .imageContainer-10XenG {
+      display: flex !important;
+      align-items: center !important;
+    }
+    .mediaAttachmentsContainer-1WGRWy {
+      width: initial !important;
+    }
+	
+  `;
+  document.head.appendChild(style);
+  return style;
+}
 
     function runMutation() {
       convertMediaToCDN();
@@ -176,12 +164,18 @@ module.exports = class name {
       observer.observe(document, config);
     }
 
-    runMutation();
-    applyMarginStyle.call(this);
-    this.removeWidthStyleElement = createRemoveWidthStyleElement();
-    this.observer = observer;
-  }
+	runMutation();
+	  if (!this.UncompressedImagesCSSStyle) {
+		this.UncompressedImagesCSSStyle = createUncompressedImagesCSSStyle();
+	  }
+	  this.observer = observer;
+	  
+  /** 
+  Code ends here, don't forget. 
+  That "}" is attached to the "start () {" function.
+  */
 
+}
   stop() {
     if (this.observer) {
       this.observer.disconnect();
@@ -203,20 +197,15 @@ module.exports = class name {
         image.style.display = '';
       });
 
-      if (this.marginStyleElement) {
-        this.marginStyleElement.remove();
-        this.marginStyleElement = null;
-      }
-
-      if (this.removeWidthStyleElement) {
-        this.removeWidthStyleElement.remove();
-        this.removeWidthStyleElement = null;
-      }
-    }
+	  if (this.UncompressedImagesCSSStyle) {
+		this.UncompressedImagesCSSStyle.remove();
+		this.UncompressedImagesCSSStyle = null;
+	  }
+	}
   }
 };
 
 /**
-* Version 3.2 of Uncompressed Images
+* Version 3.3 of Uncompressed Images
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 */

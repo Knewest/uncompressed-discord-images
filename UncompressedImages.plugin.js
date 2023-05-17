@@ -2,7 +2,7 @@
  * @name Uncompressed Images
  * @author Knew
  * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
- * @version 3.3
+ * @version 3.4
  * @authorId 332116671294734336
  * @authorLink https://github.com/Knewest
  * @website https://twitter.com/KnewestLSEP
@@ -10,91 +10,115 @@
  * @updateUrl https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/main/UncompressedImages.plugin.js
  */
 
-module.exports = class name {
-  constructor() {
-    this.observer = null;
-  }
-
-  load() {}
-
-  start() {
+	module.exports = class name {
+	  constructor() {
+		this.observer = null;
+		this.resizeListener = null;
+	  }
 	  
-    const config = {
-      attributes: true,
-      childList: true,
-      subtree: true,
-      attributeFilter: ['src'],
-    };
+start() {
+		  
+	const config = {
+	  attributes: true,
+	  childList: true,
+	  subtree: true,
+	  attributeFilter: ['src'],
+	};
 
-    const observer = new MutationObserver(callback);
+	const observer = new MutationObserver(callback);
 
-    function convertMediaToCDN() {
-      const mediaURLs = document.querySelectorAll(
-        'img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
-      );
-      mediaURLs.forEach((image) => {
-        image.src = image.src.replace(
-          'https://media.discordapp.net/attachments',
-          'https://cdn.discordapp.com/attachments'
-        );
-        image.classList.add('processed-image');
+    function updateImagePositions() {
+      const centerImageBecauseRegularCSSWillNot = document.querySelectorAll('.lazyImg-ewiNCh.processed-image.processed-grid-layout');
+      const imgContainers = document.querySelectorAll('.imageContainer-10XenG.processed-grid-layout');
+
+      centerImageBecauseRegularCSSWillNot.forEach((image, i) => {
+        const container = imgContainers[i];
+        if (container && image) {
+          const containerHeight = container.clientHeight;
+          const imageHeight = image.clientHeight;
+          const translateY = (containerHeight - imageHeight) / 2;
+          image.style.transform = `translateY(${translateY}px)`;
+        }
       });
     }
 
-    function replaceURLs() {
-      const messages = document.querySelectorAll('.messageListItem-ZZ7v6g');
-      messages.forEach((message) => {
-        const images = message.querySelectorAll('.imageDetails-1t6Zms');
-        if (images.length > 1) {
-          images.forEach((image) => {
-            image.style.display = 'none';
-          });
-        }
-      });
+	function convertMediaToCDN() {
+		const mediaURLs = document.querySelectorAll(
+			'img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+		  );
+	  mediaURLs.forEach((image) => {
+		image.src = image.src.replace(
+		  'https://media.discordapp.net/attachments',
+		  'https://cdn.discordapp.com/attachments'
+		);
+		image.classList.add('processed-image');
+	  });
+	}
 
-      const mediaURLs = document.querySelectorAll(
-        'img[src^="https://media.discordapp.net/attachments"]'
-      );
-      let index = 0;
-      function processImage() {
-        const image = mediaURLs[index];
-        if (image && !image.src.includes('.gif')) {
-          const newSrc = image.src.replace(
-            'https://media.discordapp.net/attachments',
-            'https://cdn.discordapp.com/attachments'
-          );
-          const offscreenImage = new Image();
-          offscreenImage.src = newSrc;
-			offscreenImage.onload = function () {
-			  try {
-				const aspectRatio =
-				  offscreenImage.naturalWidth / offscreenImage.naturalHeight;
-				const maxWidth = image.closest('.imageWrapper-oMkQl4').clientWidth;
-				const maxHeight = image.closest('.imageWrapper-oMkQl4').clientHeight;
-				let width = offscreenImage.naturalWidth;
-				let height = offscreenImage.naturalHeight;
-				if (width > maxWidth) {
-				  width = maxWidth;
-				  height = width / aspectRatio;
-				}
-				if (height > maxHeight) {
-				  height = maxHeight;
-				  width = height * aspectRatio;
-				}
-				image.src = newSrc;
-				image.classList.add('processed-image');
-				image.style.width = `${width}px`;
-				image.style.height = `${height}px`;
-			  }  finally {
-				index++;
-				setImmediate(processImage);
+	function replaceURLs() {
+	  const messages = document.querySelectorAll('.messageListItem-ZZ7v6g');
+	  messages.forEach((message) => {
+		const images = message.querySelectorAll('.imageDetails-1t6Zms');
+		if (images.length > 1) {
+		  images.forEach((image) => {
+			image.style.display = 'none';
+		  });
+		}
+	  });
+
+	  const mediaURLs = document.querySelectorAll(
+		'img[src^="https://media.discordapp.net/attachments"]'
+	  );
+	  let index = 0;
+	  function processImage() {
+		const image = mediaURLs[index];
+		if (image && !image.src.includes('.gif')) {
+		  const newSrc = image.src.replace(
+			'https://media.discordapp.net/attachments',
+			'https://cdn.discordapp.com/attachments'
+		  );
+		  const offscreenImage = new Image();
+		  offscreenImage.src = newSrc;
+		  offscreenImage.onload = function () {
+			try {
+			  const aspectRatio = offscreenImage.naturalWidth / offscreenImage.naturalHeight;
+			  const maxWidth = image.closest('.imageWrapper-oMkQl4').clientWidth;
+			  const maxHeight = image.closest('.imageWrapper-oMkQl4').clientHeight;
+			  let width = offscreenImage.naturalWidth;
+			  let height = offscreenImage.naturalHeight;
+			  if (width > maxWidth) {
+				width = maxWidth;
+				height = width / aspectRatio;
 			  }
-			};
-        }
-      }
+			  if (height > maxHeight) {
+				height = maxHeight;
+				width = height * aspectRatio;
+			  }
+			  image.src = newSrc;
+			  image.classList.add('processed-image');
+			  image.style.width = `${width}px`;
+			} finally {
+			  index++;
+			  setImmediate(processImage);
+			}
+		  };
+		}
+	  }
 
-      processImage();
-    }
+	  let images = document.querySelectorAll('.lazyImg-ewiNCh.processed-image.processed-single-layout');
+	  images.forEach((image) => {
+		image.addEventListener('load', function () {
+		  const classElement = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout');
+		  if (classElement && image.naturalWidth > image.naturalHeight) {
+			classElement.classList.add('auto-width');
+		  }
+		});
+	  });
+	}
+
+
+    updateImagePositions();
+    this.resizeListener = window.addEventListener('resize', updateImagePositions);
 
     function callback(mutationsList, observer) {
       for (const mutation of mutationsList) {
@@ -121,7 +145,10 @@ module.exports = class name {
           addedImages.forEach(function (image) {
             if (!image.src.includes('.gif')) {
               setImmediate(function () {
-                convertMediaToCDN();
+				  convertMediaToCDN();
+				  replaceURLs();
+				  checkForGridLayout();
+				  updateImagePositions();
               });
             }
           });
@@ -131,38 +158,91 @@ module.exports = class name {
 		  mutation.attributeName === 'src'
 		) {
           if (!mutation.target.src.includes('.gif')) {
-            replaceURLs();
+			  processImage();
+			  replaceURLs();
+			  convertMediaToCDN();
+			  replaceURLs();
+			  checkForGridLayout();
+			  updateImagePositions();
           }
-
         }
       }
     }
 
-function createUncompressedImagesCSSStyle() {
-  const style = document.createElement('style');
-  style.textContent = `
-  
-    .imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy {
-      margin: initial !important;
-    }
-    .imageContainer-10XenG {
-      display: flex !important;
-      align-items: center !important;
-    }
-    .mediaAttachmentsContainer-1WGRWy {
-      width: initial !important;
-    }
-	
-  `;
-  document.head.appendChild(style);
-  return style;
-}
+	function checkForGridLayout() {
+	  const messages = document.querySelectorAll('.messageListItem-ZZ7v6g');
+	  messages.forEach((message) => {
+		const elements = message.querySelectorAll('.lazyImg-ewiNCh, .imageContainer-10XenG, .lazyImgContainer-3k3gRy, .imageWrapper-oMkQl4');
+		const imageElements = message.querySelectorAll('.lazyImg-ewiNCh');
+		if (imageElements.length > 1) {
+		  elements.forEach((element) => {
+			element.classList.add('processed-grid-layout');
+		  });
+		} else if (imageElements.length === 1) {
+		  elements.forEach((element) => {
+			element.classList.add('processed-single-layout');
+		  });
+		}
+	  });
+	}
 
-    function runMutation() {
-      convertMediaToCDN();
-      replaceURLs();
-      observer.observe(document, config);
-    }
+	function createUncompressedImagesCSSStyle() {
+	  const style = document.createElement('style');
+	  style.textContent = `
+
+		.mediaAttachmentsContainer-1WGRWy {
+			width: initial !important;
+		}	
+	  
+		.auto-width {
+            width: auto !important;
+	        height: auto !important;
+		}
+	  
+		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout {
+			margin: initial !important;
+		}
+		
+		.attachmentContentItem-UKeiCx {
+			width: auto !important;
+			max-width: 550px !important;
+			max-height: 350px !important;
+		}
+
+		.clickableWrapper-2WTAkL {
+			height: none !important;
+		}
+		
+		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout {
+			display: -webkit-box !important;
+		}
+		
+		.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx {
+			height: none !important;	
+		}
+			
+		.lazyImg-ewiNCh.processed-image.processed-grid-layout {
+			aspect-ratio: unset !important;
+			display: grid !important;
+			width: auto !important;
+			object-fit: cover !important;
+		}
+		
+		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout {
+			max-width: 100% !important;
+		}
+		
+	  `;
+	  document.head.appendChild(style);
+	  return style;
+	}
+
+	function runMutation() {
+	  convertMediaToCDN();
+	  replaceURLs();
+	  checkForGridLayout();
+	  observer.observe(document, config);
+	}
 
 	runMutation();
 	  if (!this.UncompressedImagesCSSStyle) {
@@ -170,42 +250,58 @@ function createUncompressedImagesCSSStyle() {
 	  }
 	  this.observer = observer;
 	  
-  /** 
-  Code ends here, don't forget. 
-  That "}" is attached to the "start () {" function.
-  */
+	  /** 
+	  Main code ends here, don't forget. 
+	  That "}" is attached to the "start () {" function.
+	  */
 
-}
-  stop() {
-    if (this.observer) {
-      this.observer.disconnect();
-      this.observer = null;
+} stop() {
+		if (this.observer) {
+		  this.observer.disconnect();
+		  this.observer = null;
 
-      const processedImages = document.querySelectorAll('.processed-image');
-      processedImages.forEach((image) => {
-        image.src = image.src.replace(
-          'https://cdn.discordapp.com/attachments',
-          'https://media.discordapp.net/attachments'
-        );
-        image.classList.remove('processed-image');
-      });
+		const processedImages = document.querySelectorAll('.processed-image');
+		processedImages.forEach((image) => {
+			image.src = image.src.replace(
+				'https://cdn.discordapp.com/attachments',
+				'https://media.discordapp.net/attachments'
+			);
+				image.classList.remove('processed-image');
+			});
 
-      const hiddenImages = document.querySelectorAll(
-        '.messageListItem-ZZ7v6g .imageDetails-1t6Zms'
-      );
-      hiddenImages.forEach((image) => {
-        image.style.display = '';
-      });
+			const hiddenImages = document.querySelectorAll(
+				'.messageListItem-ZZ7v6g .imageDetails-1t6Zms'
+			);
+			
+				hiddenImages.forEach((image) => {
+				image.style.display = '';
+			});
 
-	  if (this.UncompressedImagesCSSStyle) {
-		this.UncompressedImagesCSSStyle.remove();
-		this.UncompressedImagesCSSStyle = null;
+			const singleLayoutImages = document.querySelectorAll('.processed-single-layout');
+				singleLayoutImages.forEach((image) => {
+				image.classList.remove('processed-single-layout');
+			});
+
+			const gridImages = document.querySelectorAll('.processed-grid-layout');
+				gridImages.forEach((image) => {
+				image.classList.remove('processed-grid-layout');
+			});
+
+			if (this.UncompressedImagesCSSStyle) {
+				this.UncompressedImagesCSSStyle.remove();
+				this.UncompressedImagesCSSStyle = null;
+			}
+		  
+			if (this.resizeListener) {
+				window.removeEventListener('resize', this.resizeListener);
+				this.resizeListener = null;
+			}
+		  
+		}
 	  }
-	}
-  }
-};
+	};
 
-/**
-* Version 3.3 of Uncompressed Images
-* Copyright (Boost Software License 1.0) 2023-2023 Knew
-*/
+	/**
+	* Version 3.4 of Uncompressed Images
+	* Copyright (Boost Software License 1.0) 2023-2023 Knew
+	*/

@@ -138,8 +138,6 @@
 		  mutation.attributeName === 'src'
 		) {
           if (!mutation.target.src.includes('.gif')) {
-			  processImage();
-			  replaceURLs();
 			  convertMediaToCDN();
 			  replaceURLs();
 			  checkForGridLayout();
@@ -183,12 +181,6 @@
 			margin: initial !important;
 		}
 		
-		.attachmentContentItem-UKeiCx {
-			width: auto !important;
-			max-width: 550px !important;
-			max-height: 350px !important;
-		}
-
 		.clickableWrapper-2WTAkL {
 			height: none !important;
 		}
@@ -198,7 +190,10 @@
 		}
 		
 		.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx {
-			height: none !important;	
+			height: none !important;
+			width: auto !important;
+			max-width: 550px !important;
+			max-height: 350px !important;			
 		}
 			
 		.lazyImg-ewiNCh.processed-image.processed-grid-layout {
@@ -229,8 +224,3 @@
 		this.UncompressedImagesCSSStyle = createUncompressedImagesCSSStyle();
 	  }
 	  this.observer = observer;
-
-	/**
-	* Version 3.4 of Uncompressed Images
-	* Copyright (Boost Software License 1.0) 2023-2023 Knew
-	*/

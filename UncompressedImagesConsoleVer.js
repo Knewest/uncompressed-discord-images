@@ -7,20 +7,19 @@
 
 	const observer = new MutationObserver(callback);
 
-    function updateImagePositions() {
-      const centerImageBecauseRegularCSSWillNot = document.querySelectorAll('.lazyImg-ewiNCh.processed-image.processed-grid-layout');
-      const imgContainers = document.querySelectorAll('.imageContainer-10XenG.processed-grid-layout');
+	function centerImageBecauseRegularCSSWillNot() {
+	  const updateImagePositions = document.querySelectorAll('.messageListItem-ZZ7v6g .lazyImg-ewiNCh.processed-image.processed-grid-layout');
 
-      centerImageBecauseRegularCSSWillNot.forEach((image, i) => {
-        const container = imgContainers[i];
-        if (container && image) {
-          const containerHeight = container.clientHeight;
-          const imageHeight = image.clientHeight;
-          const translateY = (containerHeight - imageHeight) / 2;
-          image.style.transform = `translateY(${translateY}px)`;
-        }
-      });
-    }
+	  updateImagePositions.forEach((image) => {
+		const container = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout');
+		if (container && image) {
+		  const containerHeight = container.clientHeight;
+		  const imageHeight = image.clientHeight;
+		  const translateY = (containerHeight - imageHeight) / 2;
+		  image.style.transform = `translateY(${translateY}px)`;
+		}
+	  });
+	}
 
 	function convertMediaToCDN() {
 		const mediaURLs = document.querySelectorAll(
@@ -39,16 +38,21 @@
 	  const messages = document.querySelectorAll('.messageListItem-ZZ7v6g');
 	  messages.forEach((message) => {
 		const images = message.querySelectorAll('.imageDetails-1t6Zms');
-		if (images.length > 1) {
+		if (images.length === 1) {
+		  const image = images[0];
+		  image.style.display = 'inline-table !important';
+		  image.style.transform = 'translateX(5px) !important';
+		  image.style.lineHeight = 'unset !important';
+		} else if (images.length > 1) {
 		  images.forEach((image) => {
 			image.style.display = 'none';
-		  });
-		}
-	  });
+		});
+	   }
+	});
 
-	  const mediaURLs = document.querySelectorAll(
-		'img[src^="https://media.discordapp.net/attachments"]'
-	  );
+	const mediaURLs = document.querySelectorAll(
+	   '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+	 );
 	  let index = 0;
 	  function processImage() {
 		const image = mediaURLs[index];
@@ -85,7 +89,7 @@
 		}
 	  }
 
-	  let images = document.querySelectorAll('.lazyImg-ewiNCh.processed-image.processed-single-layout');
+	  let images = document.querySelectorAll('.messageListItem-ZZ7v6g .lazyImg-ewiNCh.processed-image.processed-single-layout');
 	  images.forEach((image) => {
 		image.addEventListener('load', function () {
 		  const classElement = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout');
@@ -96,22 +100,20 @@
 	  });
 	}
 
-
-    updateImagePositions();
-    this.resizeListener = window.addEventListener('resize', updateImagePositions);
+    this.resizeListener = window.addEventListener('resize', centerImageBecauseRegularCSSWillNot);
 
     function callback(mutationsList, observer) {
       for (const mutation of mutationsList) {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
           const addedImages = Array.from(mutation.addedNodes)
             .flatMap((node) =>
-              node.querySelectorAll
-                ? Array.from(
-                    node.querySelectorAll(
-                      'img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
-                    )
-                  )
-                : []
+			  node.querySelectorAll
+				? Array.from(
+					node.querySelectorAll(
+					  '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+					)
+				  )
+             : []
             )
             .concat(
               Array.from(mutation.addedNodes).filter(
@@ -128,7 +130,7 @@
 				  convertMediaToCDN();
 				  replaceURLs();
 				  checkForGridLayout();
-				  updateImagePositions();
+				  centerImageBecauseRegularCSSWillNot();
               });
             }
           });
@@ -141,7 +143,7 @@
 			  convertMediaToCDN();
 			  replaceURLs();
 			  checkForGridLayout();
-			  updateImagePositions();
+			  centerImageBecauseRegularCSSWillNot();
           }
         }
       }
@@ -150,7 +152,7 @@
 	function checkForGridLayout() {
 	  const messages = document.querySelectorAll('.messageListItem-ZZ7v6g');
 	  messages.forEach((message) => {
-		const elements = message.querySelectorAll('.lazyImg-ewiNCh, .imageContainer-10XenG, .lazyImgContainer-3k3gRy, .imageWrapper-oMkQl4');
+		const elements = message.querySelectorAll('.lazyImg-ewiNCh, .imageContainer-10XenG, .lazyImgContainer-3k3gRy, .imageWrapper-oMkQl4, .imageContent-3Av-9c');
 		const imageElements = message.querySelectorAll('.lazyImg-ewiNCh');
 		if (imageElements.length > 1) {
 		  elements.forEach((element) => {
@@ -175,6 +177,11 @@
 		.auto-width {
             width: auto !important;
 	        height: auto !important;
+			max-width: 550px;
+		}		
+		
+		.auto-width img {
+	        max-height: 350px !important;
 		}
 	  
 		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout {
@@ -189,24 +196,32 @@
 			display: -webkit-box !important;
 		}
 		
-		.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx {
-			height: none !important;
+		.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx.processed-single-layout {
+			height: auto !important;
 			width: auto !important;
-			max-width: 550px !important;
-			max-height: 350px !important;			
+			max-width: 550px !important;		
+		}
+
+		.imageWrapper-oMkQl4.embedWrapper-1MtIDg.lazyImg-ewiNCh.attachmentContentItem-UKeiCx.processed-single-layout {
+			width: auto !important;
 		}
 			
 		.lazyImg-ewiNCh.processed-image.processed-grid-layout {
 			aspect-ratio: unset !important;
 			display: grid !important;
 			width: auto !important;
+			height: auto !important;
 			object-fit: cover !important;
 		}
 		
+		.lazyImg-ewiNCh processed-image processed-single-layout {
+			max-width: 550px !important;
+		}	
+	
 		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout {
 			max-width: 100% !important;
 		}
-		
+
 	  `;
 	  document.head.appendChild(style);
 	  return style;
@@ -224,3 +239,8 @@
 		this.UncompressedImagesCSSStyle = createUncompressedImagesCSSStyle();
 	  }
 	  this.observer = observer;
+
+	/**
+	* Version 3.6 of Uncompressed Images
+	* Copyright (Boost Software License 1.0) 2023-2023 Knew
+	*/

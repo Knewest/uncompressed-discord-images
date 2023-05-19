@@ -40,9 +40,9 @@
 		const images = message.querySelectorAll('.imageDetails-1t6Zms');
 		if (images.length === 1) {
 		  const image = images[0];
-		  image.style.display = 'inline-table !important';
-		  image.style.transform = 'translateX(5px) !important';
-		  image.style.lineHeight = 'unset !important';
+		  image.style.display = 'inline-table';
+		  image.style.transform = 'translateX(5px)';
+		  image.style.lineHeight = 'unset';
 		} else if (images.length > 1) {
 		  images.forEach((image) => {
 			image.style.display = 'none';
@@ -85,9 +85,9 @@
 			  index++;
 			  setImmediate(processImage);
 			}
-		  };
-		}
+		 };
 	  }
+	}
 
 	  let images = document.querySelectorAll('.messageListItem-ZZ7v6g .lazyImg-ewiNCh.processed-image.processed-single-layout');
 	  images.forEach((image) => {
@@ -115,25 +115,25 @@
 				  )
              : []
             )
-            .concat(
-              Array.from(mutation.addedNodes).filter(
-                (node) =>
-                  node.tagName === 'IMG' &&
-                  node.src.startsWith('https://media.discordapp.net/attachments') &&
-                  !node.classList.contains('processed-image') 
-              )
-            );
+        .concat(
+           Array.from(mutation.addedNodes).filter(
+              (node) =>
+                node.tagName === 'IMG' &&
+                node.src.startsWith('https://media.discordapp.net/attachments') &&
+                !node.classList.contains('processed-image') 
+            )
+        );
 
-          addedImages.forEach(function (image) {
+        addedImages.forEach(function (image) {
             if (!image.src.includes('.gif')) {
               setImmediate(function () {
 				  convertMediaToCDN();
 				  replaceURLs();
 				  checkForGridLayout();
 				  centerImageBecauseRegularCSSWillNot();
-              });
+                });
             }
-          });
+        });
 
 		} else if (
 		  mutation.type === 'attributes' &&
@@ -144,7 +144,7 @@
 			  replaceURLs();
 			  checkForGridLayout();
 			  centerImageBecauseRegularCSSWillNot();
-          }
+            }
         }
       }
     }

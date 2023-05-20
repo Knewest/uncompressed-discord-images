@@ -2,7 +2,7 @@
  * @name Uncompressed Images
  * @author Knew
  * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
- * @version 3.8
+ * @version 3.9
  * @authorId 332116671294734336
  * @authorLink https://github.com/Knewest
  * @website https://twitter.com/KnewestLSEP
@@ -64,7 +64,7 @@ start() {
 		  image.style.transform = 'translateX(5px) translateY(-0px)';
 		  image.style.lineHeight = 'unset';
 		  
-		  const parent = image.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx.processed-single-layout');
+		  const parent = image.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx');
 		  if (parent) {
 			parent.appendChild(image);
 		  }
@@ -324,20 +324,21 @@ start() {
 				this.resizeListener = null;
 			}  
 			
-			const imageDetailsElements = document.querySelectorAll('.imageDetails-1t6Zms');
-				imageDetailsElements.forEach((element) => {
-				const targetParent = element.closest('.imageContainer-10XenG');
-					if (targetParent) {
-						targetParent.insertAdjacentElement('beforeend', element);
-					}
-			});
+    const imageDetailsElements = document.querySelectorAll('.imageDetails-1t6Zms');
+    imageDetailsElements.forEach((element) => {
+        const commonParent = element.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx');
+        const targetParent = commonParent.querySelector('.imageContainer-10XenG div');
+        if (targetParent) {
+            targetParent.appendChild(element);
+        }
+    });
 			
 		}
 	  }
 	};
 
 	/**
-	* Version 3.8 of Uncompressed Images
+	* Version 3.9 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
 	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 	*/

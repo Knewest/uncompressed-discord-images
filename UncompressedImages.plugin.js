@@ -2,7 +2,7 @@
  * @name Uncompressed Images
  * @author Knew
  * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
- * @version 3.6
+ * @version 3.7
  * @authorId 332116671294734336
  * @authorLink https://github.com/Knewest
  * @website https://twitter.com/KnewestLSEP
@@ -43,7 +43,7 @@ start() {
 
 	function convertMediaToCDN() {
 		const mediaURLs = document.querySelectorAll(
-			'img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+			'.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
 		  );
 	  mediaURLs.forEach((image) => {
 		image.src = image.src.replace(
@@ -107,6 +107,7 @@ start() {
 			}
 		 };
 	  }
+	  processImage();
 	}
 
 	  let images = document.querySelectorAll('.messageListItem-ZZ7v6g .lazyImg-ewiNCh.processed-image.processed-single-layout');
@@ -130,7 +131,7 @@ start() {
 			  node.querySelectorAll
 				? Array.from(
 					node.querySelectorAll(
-					  '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+					  '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
 					)
 				  )
              : []
@@ -315,6 +316,6 @@ start() {
 	};
 
 	/**
-	* Version 3.6 of Uncompressed Images
+	* Version 3.7 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
 	*/

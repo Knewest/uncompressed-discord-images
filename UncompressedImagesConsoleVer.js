@@ -41,14 +41,21 @@
 		if (images.length === 1) {
 		  const image = images[0];
 		  image.style.display = 'inline-table';
-		  image.style.transform = 'translateX(5px)';
+		  image.style.transform = 'translateX(5px) translateY(-0px)';
 		  image.style.lineHeight = 'unset';
+		  
+		  // Find the parent element
+		  const parent = image.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx.processed-single-layout');
+		  if (parent) {
+			// move ImageDetails to be the last child of the parent.
+			parent.appendChild(image);
+		  }
 		} else if (images.length > 1) {
 		  images.forEach((image) => {
 			image.style.display = 'none';
-		});
-	   }
-	});
+		  });
+		}
+	  });
 
 	const mediaURLs = document.querySelectorAll(
 	   '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
@@ -178,7 +185,7 @@
 		.auto-width {
             width: auto !important;
 	        height: auto !important;
-			max-width: 550px;
+			max-width: 550px !important;
 		}		
 		
 		.auto-width img {
@@ -222,6 +229,14 @@
 		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout {
 			max-width: 100% !important;
 		}
+		
+		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout {
+			height: 100% !important;
+		}
+		
+		.cursorPointer-B3uwDA {
+			transform: translateY(2px) !important;
+		}
 
 	  `;
 	  document.head.appendChild(style);
@@ -242,7 +257,7 @@
 	  this.observer = observer;
 
 	/**
-	* Version 3.7 of Uncompressed Images
+	* Version 3.8 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
 	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 	*/

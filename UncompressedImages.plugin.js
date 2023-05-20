@@ -2,7 +2,7 @@
  * @name Uncompressed Images
  * @author Knew
  * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
- * @version 3.7
+ * @version 3.8
  * @authorId 332116671294734336
  * @authorLink https://github.com/Knewest
  * @website https://twitter.com/KnewestLSEP
@@ -61,14 +61,21 @@ start() {
 		if (images.length === 1) {
 		  const image = images[0];
 		  image.style.display = 'inline-table';
-		  image.style.transform = 'translateX(5px)';
+		  image.style.transform = 'translateX(5px) translateY(-0px)';
 		  image.style.lineHeight = 'unset';
+		  
+		  // Find the parent element
+		  const parent = image.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx.processed-single-layout');
+		  if (parent) {
+			// move ImageDetails to be the last child of the parent.
+			parent.appendChild(image);
+		  }
 		} else if (images.length > 1) {
 		  images.forEach((image) => {
 			image.style.display = 'none';
-		});
-	   }
-	});
+		  });
+		}
+	  });
 
 	const mediaURLs = document.querySelectorAll(
 	   '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
@@ -198,7 +205,7 @@ start() {
 		.auto-width {
             width: auto !important;
 	        height: auto !important;
-			max-width: 550px;
+			max-width: 550px !important;
 		}		
 		
 		.auto-width img {
@@ -241,6 +248,14 @@ start() {
 	
 		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout {
 			max-width: 100% !important;
+		}
+		
+		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout {
+			height: 100% !important;
+		}
+		
+		.cursorPointer-B3uwDA {
+			transform: translateY(2px) !important;
 		}
 
 	  `;
@@ -311,12 +326,20 @@ start() {
 				this.resizeListener = null;
 			}  
 			
+			const imageDetailsElements = document.querySelectorAll('.imageDetails-1t6Zms');
+				imageDetailsElements.forEach((element) => {
+				const targetParent = element.closest('.imageContainer-10XenG');
+					if (targetParent) {
+						targetParent.insertAdjacentElement('beforeend', element);
+					}
+			});
+			
 		}
 	  }
 	};
 
 	/**
-	* Version 3.7 of Uncompressed Images
+	* Version 3.8 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
 	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 	*/

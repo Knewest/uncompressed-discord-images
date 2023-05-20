@@ -44,10 +44,8 @@
 		  image.style.transform = 'translateX(5px) translateY(-0px)';
 		  image.style.lineHeight = 'unset';
 		  
-		  // Find the parent element
 		  const parent = image.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx.processed-single-layout');
 		  if (parent) {
-			// move ImageDetails to be the last child of the parent.
 			parent.appendChild(image);
 		  }
 		} else if (images.length > 1) {

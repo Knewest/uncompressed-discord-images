@@ -44,7 +44,7 @@
 		  image.style.transform = 'translateX(5px) translateY(-0px)';
 		  image.style.lineHeight = 'unset';
 		  
-		  const parent = image.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx.processed-single-layout');
+		  const parent = image.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx');
 		  if (parent) {
 			parent.appendChild(image);
 		  }
@@ -53,7 +53,7 @@
 			image.style.display = 'none';
 		  });
 		}
-	  });
+	});
 
 	const mediaURLs = document.querySelectorAll(
 	   '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
@@ -255,7 +255,7 @@
 	  this.observer = observer;
 
 	/**
-	* Version 3.8 of Uncompressed Images
+	* Version 3.9 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
 	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 	*/

@@ -23,7 +23,7 @@
 
 	function convertMediaToCDN() {
 		const mediaURLs = document.querySelectorAll(
-			'.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+			'.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
 		  );
 	  mediaURLs.forEach((image) => {
 		image.src = image.src.replace(
@@ -51,7 +51,7 @@
 	});
 
 	const mediaURLs = document.querySelectorAll(
-	   '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+	   '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
 	 );
 	  let index = 0;
 	  function processImage() {
@@ -111,7 +111,7 @@
 			  node.querySelectorAll
 				? Array.from(
 					node.querySelectorAll(
-					  '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+					  '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
 					)
 				  )
              : []
@@ -244,5 +244,5 @@
 	/**
 	* Version 3.7 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
-        * Link to plugin: https://github.com/Knewest/uncompressed-discord-images
+	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 	*/

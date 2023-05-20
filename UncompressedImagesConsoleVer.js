@@ -8,7 +8,7 @@
 	const observer = new MutationObserver(callback);
 
 	function centerImageBecauseRegularCSSWillNot() {
-	  const updateImagePositions = document.querySelectorAll('.messageListItem-ZZ7v6g .lazyImg-ewiNCh.processed-image.processed-grid-layout');
+	  const updateImagePositions = document.querySelectorAll('.container-2sjPya .lazyImg-ewiNCh.processed-image.processed-grid-layout');
 
 	  updateImagePositions.forEach((image) => {
 		const container = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout');
@@ -23,7 +23,7 @@
 
 	function convertMediaToCDN() {
 		const mediaURLs = document.querySelectorAll(
-			'.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+			'.container-2sjPya img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
 		  );
 	  mediaURLs.forEach((image) => {
 		image.src = image.src.replace(
@@ -35,7 +35,7 @@
 	}
 
 	function replaceURLs() {
-	  const messages = document.querySelectorAll('.messageListItem-ZZ7v6g');
+	  const messages = document.querySelectorAll('.container-2sjPya');
 	  messages.forEach((message) => {
 		const images = message.querySelectorAll('.imageDetails-1t6Zms');
 		if (images.length === 1) {
@@ -56,7 +56,7 @@
 	});
 
 	const mediaURLs = document.querySelectorAll(
-	   '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+	   '.container-2sjPya img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
 	 );
 	  let index = 0;
 	  function processImage() {
@@ -95,7 +95,7 @@
 	  processImage();
 	}
 
-	  let images = document.querySelectorAll('.messageListItem-ZZ7v6g .lazyImg-ewiNCh.processed-image.processed-single-layout');
+	  let images = document.querySelectorAll('.container-2sjPya .lazyImg-ewiNCh.processed-image.processed-single-layout');
 	  images.forEach((image) => {
 		image.addEventListener('load', function () {
 		  const classElement = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout');
@@ -116,7 +116,7 @@
 			  node.querySelectorAll
 				? Array.from(
 					node.querySelectorAll(
-					  '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+					  '.container-2sjPya img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
 					)
 				  )
              : []
@@ -156,7 +156,7 @@
     }
 
 	function checkForGridLayout() {
-	  const messages = document.querySelectorAll('.messageListItem-ZZ7v6g');
+	  const messages = document.querySelectorAll('.container-2sjPya');
 	  messages.forEach((message) => {
 		const elements = message.querySelectorAll('.lazyImg-ewiNCh, .imageContainer-10XenG, .lazyImgContainer-3k3gRy, .imageWrapper-oMkQl4, .imageContent-3Av-9c');
 		const imageElements = message.querySelectorAll('.lazyImg-ewiNCh');
@@ -255,7 +255,7 @@
 	  this.observer = observer;
 
 	/**
-	* Version 3.9 of Uncompressed Images
+	* Version 3.10 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
 	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 	*/

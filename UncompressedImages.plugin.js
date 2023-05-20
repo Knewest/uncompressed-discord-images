@@ -73,7 +73,7 @@ start() {
 			image.style.display = 'none';
 		  });
 		}
-	  });
+	});
 
 	const mediaURLs = document.querySelectorAll(
 	   '.messageListItem-ZZ7v6g img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
@@ -324,14 +324,14 @@ start() {
 				this.resizeListener = null;
 			}  
 			
-    const imageDetailsElements = document.querySelectorAll('.imageDetails-1t6Zms');
-    imageDetailsElements.forEach((element) => {
-        const commonParent = element.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx');
-        const targetParent = commonParent.querySelector('.imageContainer-10XenG div');
-        if (targetParent) {
-            targetParent.appendChild(element);
-        }
-    });
+			const imageDetailsElements = document.querySelectorAll('.imageDetails-1t6Zms');
+			imageDetailsElements.forEach((element) => {
+				const commonParent = element.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx');
+				const targetParent = commonParent.querySelector('.imageContainer-10XenG div');
+				if (targetParent) {
+					targetParent.appendChild(element);
+				}
+			});
 			
 		}
 	  }

@@ -37,4 +37,4 @@ This means that if you click on the image, even though the quality is a bit bett
 
 ### Here is a guide on how to make BetterDiscord as easy as possible to install and use:
 https://gist.github.com/Knewest/ee59d3960e18e6d813c9221b54b36ab1 <br>
-Please follow the regular installation procedure if you do not understand: https://betterdiscord.app/
+<sub>Please follow the regular installation procedure if you do not understand: https://betterdiscord.app/</sub>

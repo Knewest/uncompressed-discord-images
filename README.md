@@ -5,9 +5,13 @@ links to 'cdn.discordapp.com' links, we will no longer have blurry images (espec
 <s><sub>Another feature of this plugin is that it makes animated PNGs uploaded to the Discord server playable within the client.</sub></s><br>
 <sub>Discord has broken APNG support completely when they addressed the 'aCropalypse' vulnerbility.</sub><p>
 
-This is compatible with BetterDiscord as a plugin and/or can be executed in the console of the client.<br> 
+This is compatible with BetterDiscord as a plugin and/or can be executed in the console of the client/browser.<br> 
 <br><a href="https://github.com/Knewest/uncompressed-discord-images/releases">
-  <img src="https://cdn.discordapp.com/attachments/753561208073879642/1104738977421996213/DownloadButton.webp" alt="Download from GitHub" style="cursor:pointer;"/>
+  <img src="https://cdn.discordapp.com/attachments/753561208073879642/1110739988712271873/DownloadButtonFromGithub.webp" alt="Download from GitHub" style="cursor:pointer;"/>
+</a><a href="https://betterdiscord.app/Download?id=936">
+  <img src="https://cdn.discordapp.com/attachments/753561208073879642/1110738604780691616/DownloadButtonLatestVersion.webp" alt="Download the latest version" style="cursor:pointer;"/>
+</a></a><a href="https://github.com/Knewest/uncompressed-discord-images/blob/main/UncompressedImagesConsoleVer.js">
+  <img src="https://cdn.discordapp.com/attachments/753561208073879642/1110742637771772024/ClickToUseConsoleVersionButton.webp" alt="Use the console version" style="cursor:pointer;"/>
 </a>
 
 

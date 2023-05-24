@@ -19,7 +19,7 @@ This is compatible with BetterDiscord as a plugin and/or can be executed in the 
 
 ## Comparisons:
 
-|**Image format:**|**Before fix:**|**After fix:**| 
+|<sub>**Image format:**</sub>|**Before fix:**|**After fix:**| 
 |:---:|:---:|:---:|
 |**PNG**|![PNGComparisonLQ1](https://cdn.discordapp.com/attachments/753561208073879642/1101597065953431652/wVUDsCCrsD_LQ_PNG.webp)|![PNGComparisonHQ1](https://cdn.discordapp.com/attachments/753561208073879642/1101597074463674449/wVUDsCCrsD_HQ_PNG.webp)|
 |**JPEG**|![JPGComparisonLQ1](https://user-images.githubusercontent.com/94736474/224312885-cb26264e-e2d0-404f-ae50-395bf81a54f1.png)|![JPGComparisonHQ1](https://user-images.githubusercontent.com/94736474/224315183-e5e5dc8b-16f7-4072-8fae-45a4ed904a21.png)|

@@ -52,17 +52,24 @@ start() {
 	}
 
 	function adjustMaxWidthBasedOnCurrentWidth() {
-	  const imgElements = document.querySelectorAll(".imageWrapper-oMkQl4.embedWrapper-1MtIDg.lazyImg-ewiNCh.attachmentContentItem-UKeiCx.processed-single-layout");
+		const imgElements = Array.from(document.querySelectorAll(".imageWrapper-oMkQl4.embedWrapper-1MtIDg.lazyImg-ewiNCh.attachmentContentItem-UKeiCx.processed-single-layout"));
 
-	  imgElements.forEach((imgElement) => {
-		if (!imgElement.classList.contains("max-width-adjusted")) {
-		  const style = window.getComputedStyle(imgElement);
-		  const currentWidth = style.getPropertyValue('width');
-		  imgElement.style.maxWidth = currentWidth;
-		  imgElement.classList.add("max-width-adjusted");
-		  console.log(`Adjusted max-width for image to ${currentWidth}`);
-		}
-	  });
+		  function processNextImage(index) {
+			if (index >= imgElements.length) {
+			  return;
+			}
+
+			const imgElement = imgElements[index];
+			if (!imgElement.classList.contains("max-width-adjusted")) {
+			  const style = window.getComputedStyle(imgElement);
+			  const currentWidth = style.getPropertyValue('width');
+			  imgElement.style.maxWidth = currentWidth;
+			  imgElement.classList.add("max-width-adjusted");
+			  /** console.log(`Adjusted max-width for image to ${currentWidth}`); **/
+			}
+			setTimeout(() => processNextImage(index + 1), 0);
+		  }
+		processNextImage(0);
 	}
 
 	function convertMediaToCDN() {
@@ -284,7 +291,7 @@ start() {
 	    convertMediaToCDN();
 	    replaceURLs();
 	    checkForGridLayout();
-	    adjustMaxWidthBasedOnCurrentWidth();
+	    setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
 	    observer.observe(document, config);
 
 	    let images = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-single-layout');
@@ -315,7 +322,12 @@ runMutation();
 		  this.observer.disconnect();
 		  this.observer = null;
 
-		const maxWidthAdjustedImages = document.querySelectorAll('.max-width-adjusted');
+		const autoWidthElements = document.querySelectorAll('.auto-width');
+		autoWidthElements.forEach((element) => {
+			element.classList.remove('auto-width');
+		});
+  
+  		const maxWidthAdjustedImages = document.querySelectorAll('.max-width-adjusted');
 		maxWidthAdjustedImages.forEach((image) => {
 			image.classList.remove('max-width-adjusted');
 		});

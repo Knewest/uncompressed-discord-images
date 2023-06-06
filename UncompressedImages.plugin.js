@@ -2,7 +2,7 @@
  * @name Uncompressed Images
  * @author Knew
  * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
- * @version 3.11
+ * @version 3.12
  * @authorId 332116671294734336
  * @authorLink https://github.com/Knewest
  * @website https://twitter.com/KnewestLSEP
@@ -47,6 +47,20 @@ start() {
 		  const imageHeight = image.clientHeight;
 		  const translateY = (containerHeight - imageHeight) / 2;
 		  image.style.transform = `translateY(${translateY}px)`;
+		}
+	  });
+	}
+
+	function adjustMaxWidthBasedOnCurrentWidth() {
+	  const imgElements = document.querySelectorAll(".imageWrapper-oMkQl4.embedWrapper-1MtIDg.lazyImg-ewiNCh.attachmentContentItem-UKeiCx.processed-single-layout");
+
+	  imgElements.forEach((imgElement) => {
+		if (!imgElement.classList.contains("max-width-adjusted")) {
+		  const style = window.getComputedStyle(imgElement);
+		  const currentWidth = style.getPropertyValue('width');
+		  imgElement.style.maxWidth = currentWidth;
+		  imgElement.classList.add("max-width-adjusted");
+		  console.log(`Adjusted max-width for image to ${currentWidth}`);
 		}
 	  });
 	}
@@ -124,8 +138,7 @@ start() {
 		 };
 	  }
 	}
-	
-	      this.animationFrame = requestAnimationFrame(processImage);
+	    this.animationFrame = requestAnimationFrame(processImage);
     }
 
 	  let images = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-single-layout');
@@ -141,52 +154,41 @@ start() {
 
     this.resizeListener = window.addEventListener('resize', debounce(centerImageBecauseRegularCSSWillNot, 100));
 
-    function callback(mutationsList, observer) {
-      for (const mutation of mutationsList) {
-        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-          const addedImages = Array.from(mutation.addedNodes)
-            .flatMap((node) =>
-			  node.querySelectorAll
-				? Array.from(
-					node.querySelectorAll(
-					  '.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer-10XenG img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
-					)
-				  )
-             : []
-            )
-        .concat(
-           Array.from(mutation.addedNodes).filter(
-              (node) =>
-                node.tagName === 'IMG' &&
-                node.src.startsWith('https://media.discordapp.net/attachments') &&
-                !node.classList.contains('processed-image') 
-            )
-        );
+	function callback(mutationsList, observer) {
+	    for (const mutation of mutationsList) {
+		    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+		        const addedImages = Array.from(mutation.addedNodes).flatMap((node) =>
+				node.querySelectorAll
+			    ? Array.from(
+				node.querySelectorAll(
+				'.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer-10XenG img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
+			)
+		)
+	 : []
+	);
 
-        addedImages.forEach(function (image) {
-            if (!image.src.includes('.gif')) {
-              setImmediate(function () {
-				  convertMediaToCDN();
-				  replaceURLs();
-				  checkForGridLayout();
-				  centerImageBecauseRegularCSSWillNot();
-                });
-            }
-        });
-
-		} else if (
-		  mutation.type === 'attributes' &&
-		  mutation.attributeName === 'src'
-		) {
-          if (!mutation.target.src.includes('.gif')) {
-			  convertMediaToCDN();
-			  replaceURLs();
-			  checkForGridLayout();
-			  centerImageBecauseRegularCSSWillNot();
-            }
-        }
-      }
-    }
+		  addedImages.forEach((image) => {
+			if (!image.src.includes('.gif')) {
+			  setImmediate(function () {
+				convertMediaToCDN();
+				replaceURLs();
+				checkForGridLayout();
+				centerImageBecauseRegularCSSWillNot();
+				setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
+			  });
+			}
+		  });
+		} else if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
+		  if (!mutation.target.src.includes('.gif')) {
+			convertMediaToCDN();
+			replaceURLs();
+			checkForGridLayout();
+			centerImageBecauseRegularCSSWillNot();
+			setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
+		  }
+		}
+	  }
+	}
 
 	function checkForGridLayout() {
 	  const messages = document.querySelectorAll('.container-2sjPya');
@@ -279,13 +281,25 @@ start() {
 	}
 
 	function runMutation() {
-	  convertMediaToCDN();
-	  replaceURLs();
-	  checkForGridLayout();
-	  observer.observe(document, config);
+	    convertMediaToCDN();
+	    replaceURLs();
+	    checkForGridLayout();
+	    adjustMaxWidthBasedOnCurrentWidth();
+	    observer.observe(document, config);
+
+	    let images = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-single-layout');
+	    images.forEach((image) => {
+		image.addEventListener('load', function () {
+		    const classElement = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout');
+		    if (classElement && image.naturalWidth > image.naturalHeight) {
+			classElement.classList.add('auto-width');
+		  }
+		});
+	  });
 	}
 
-	runMutation();
+runMutation();
+
 	  if (!this.UncompressedImagesCSSStyle) {
 		this.UncompressedImagesCSSStyle = createUncompressedImagesCSSStyle();
 	  }
@@ -301,6 +315,11 @@ start() {
 		  this.observer.disconnect();
 		  this.observer = null;
 
+		const maxWidthAdjustedImages = document.querySelectorAll('.max-width-adjusted');
+		maxWidthAdjustedImages.forEach((image) => {
+			image.classList.remove('max-width-adjusted');
+		});
+  
 		const processedImages = document.querySelectorAll('.processed-image');
 		processedImages.forEach((image) => {
 			image.src = image.src.replace(
@@ -365,7 +384,7 @@ start() {
 	};
 
 	/**
-	* Version 3.11 of Uncompressed Images
+	* Version 3.12 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
 	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 	*/

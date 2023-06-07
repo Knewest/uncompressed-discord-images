@@ -46,7 +46,7 @@
 			  imgElement.classList.add("max-width-adjusted");
 			  /** console.log(`Adjusted max-width for image to ${currentWidth}`); **/
 			}
-			setTimeout(() => processNextImage(index + 1), 0);
+			setTimeout(() => processNextImage(index + 1), 5);
 		  }
 		processNextImage(0);
 	}

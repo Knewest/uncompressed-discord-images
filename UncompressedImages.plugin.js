@@ -35,7 +35,7 @@ start() {
 	  attributeFilter: ['src'],
 	};
 
-	const observer = new MutationObserver(callback);
+	const localObserver = new MutationObserver(callback);
 
 	function centerImageBecauseRegularCSSWillNot() {
 	  const updateImagePositions = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-grid-layout');
@@ -67,7 +67,7 @@ start() {
 			  imgElement.classList.add("max-width-adjusted");
 			  /** console.log(`Adjusted max-width for image to ${currentWidth}`); **/
 			}
-			setTimeout(() => processNextImage(index + 1), 0);
+			setTimeout(() => processNextImage(index + 1), 5);
 		  }
 		processNextImage(0);
 	}
@@ -292,7 +292,7 @@ start() {
 	    replaceURLs();
 	    checkForGridLayout();
 	    setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
-	    observer.observe(document, config);
+	    localObserver.observe(document, config);
 
 	    let images = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-single-layout');
 	    images.forEach((image) => {
@@ -305,22 +305,23 @@ start() {
 	  });
 	}
 
-runMutation();
+	runMutation();
 
-	  if (!this.UncompressedImagesCSSStyle) {
+	if (!this.UncompressedImagesCSSStyle) {
 		this.UncompressedImagesCSSStyle = createUncompressedImagesCSSStyle();
-	  }
-	  this.observer = observer;
-	  
+	}
+	
+	this.mutationObserver = localObserver;
+	   
 	  /** 
 	  Main code ends here, don't forget. 
 	  That "}" is attached to the "start () {" function.
 	  */
 
 } stop() {
-		if (this.observer) {
-		  this.observer.disconnect();
-		  this.observer = null;
+	if (this.mutationObserver) {
+		this.mutationObserver.disconnect();
+		this.mutationObserver = null; 
 
 		const autoWidthElements = document.querySelectorAll('.auto-width');
 		autoWidthElements.forEach((element) => {
@@ -330,7 +331,7 @@ runMutation();
   		const maxWidthAdjustedImages = document.querySelectorAll('.max-width-adjusted');
 		maxWidthAdjustedImages.forEach((image) => {
 			image.classList.remove('max-width-adjusted');
-		});
+		}); 
   
 		const processedImages = document.querySelectorAll('.processed-image');
 		processedImages.forEach((image) => {
@@ -396,7 +397,7 @@ runMutation();
 	};
 
 	/**
-	* Version 3.12 of Uncompressed Images
+	* Version 3.12 v3 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
 	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 	*/

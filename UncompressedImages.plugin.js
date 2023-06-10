@@ -62,7 +62,8 @@ start() {
 			const imgElement = imgElements[index];
 			if (!imgElement.classList.contains("max-width-adjusted")) {
 			  const style = window.getComputedStyle(imgElement);
-			  const currentWidth = style.getPropertyValue('width');
+			  let currentWidth = style.getPropertyValue('width');
+			  if (currentWidth === "0px") currentWidth = "auto";	
 			  imgElement.style.maxWidth = currentWidth;
 			  imgElement.classList.add("max-width-adjusted");
 			  /** console.log(`Adjusted max-width for image to ${currentWidth}`); **/

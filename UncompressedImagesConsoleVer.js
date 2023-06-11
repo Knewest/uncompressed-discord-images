@@ -41,7 +41,8 @@
 			const imgElement = imgElements[index];
 			if (!imgElement.classList.contains("max-width-adjusted")) {
 			  const style = window.getComputedStyle(imgElement);
-			  const currentWidth = style.getPropertyValue('width');
+			  let currentWidth = style.getPropertyValue('width');
+			  if (currentWidth === "0px") currentWidth = "auto";	
 			  imgElement.style.maxWidth = currentWidth;
 			  imgElement.classList.add("max-width-adjusted");
 			  /** console.log(`Adjusted max-width for image to ${currentWidth}`); **/
@@ -293,7 +294,7 @@
 	this.mutationObserver = localObserver;
 
 	/**
-	* Version 3.12 v3 of Uncompressed Images
+	* Version 3.13 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
 	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 	*/

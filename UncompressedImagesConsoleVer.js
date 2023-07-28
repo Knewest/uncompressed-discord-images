@@ -30,6 +30,34 @@
 	  });
 	}
 
+	function enhanceAvatarQuality() {
+		const avatarURLs = document.querySelectorAll(
+		'img.avatar-2e8lTP[src^="https://cdn.discordapp.com/avatars"]:not(.processed-avatar), img.avatar-31d8He[src^="https://cdn.discordapp.com/avatars"]:not(.processed-avatar)'
+		);
+		avatarURLs.forEach((image) => {
+			let newSrc = image.src.replace(/\?size=\d*/, '');
+			if (!newSrc.includes('?quality=lossless')) {
+			  newSrc += '?quality=lossless';
+			}
+			image.src = newSrc;
+			image.classList.add('processed-avatar');
+		});
+	}
+	
+	function enhanceIconQuality() {
+		const iconURLs = document.querySelectorAll(
+		'img.icon-3AqZ2e[src^="https://cdn.discordapp.com/icons/"]:not(.processed-icon)'
+		);
+		iconURLs.forEach((image) => {
+			let newSrc = image.src.replace(/\?size=\d*/, '');
+			if (!newSrc.includes('?quality=lossless')) {
+			  newSrc += '?quality=lossless';
+			}
+			image.src = newSrc;
+			image.classList.add('processed-icon');
+		});
+	}
+
 	function adjustMaxWidthBasedOnCurrentWidth() {
 		const imgElements = Array.from(document.querySelectorAll(".imageWrapper-oMkQl4.embedWrapper-1MtIDg.lazyImg-ewiNCh.attachmentContentItem-UKeiCx.processed-single-layout"));
 
@@ -52,17 +80,17 @@
 		processNextImage(0);
 	}
 
+	const SELECTOR_IMG_SRC = '.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer-10XenG img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
+
 	function convertMediaToCDN() {
-		const mediaURLs = document.querySelectorAll(
-			'.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer-10XenG img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
-		  );
-	  mediaURLs.forEach((image) => {
-		image.src = image.src.replace(
-		  'https://media.discordapp.net/attachments',
-		  'https://cdn.discordapp.com/attachments'
-		);
-		image.classList.add('processed-image');
-	  });
+		const mediaURLs = document.querySelectorAll(SELECTOR_IMG_SRC);
+		mediaURLs.forEach((image) => {
+			image.src = image.src.replace(
+			'https://media.discordapp.net/attachments',
+			'https://cdn.discordapp.com/attachments'
+			);
+			image.classList.add('processed-image');
+		});
 	}
 
 	function replaceURLs() {
@@ -86,9 +114,7 @@
 		}
 	});
 
-	const mediaURLs = document.querySelectorAll(
-	   '.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer-10XenG img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
-	 );
+	const mediaURLs = document.querySelectorAll(SELECTOR_IMG_SRC);
 	  let index = 0;
 	  function processImage() {
 		const image = mediaURLs[index];
@@ -141,40 +167,36 @@
 
     this.resizeListener = window.addEventListener('resize', debounce(centerImageBecauseRegularCSSWillNot, 100));
 
-	function callback(mutationsList, observer) {
-	    for (const mutation of mutationsList) {
-		    if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-		        const addedImages = Array.from(mutation.addedNodes).flatMap((node) =>
-				node.querySelectorAll
-			    ? Array.from(
-				node.querySelectorAll(
-				'.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer-10XenG img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)'
-			)
-		)
-	 : []
-	);
+	function processImageSrc() {
+	  convertMediaToCDN();
+	  replaceURLs();
+	  checkForGridLayout();
+	  centerImageBecauseRegularCSSWillNot();
+	  setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
+	}
 
-		  addedImages.forEach((image) => {
-			if (!image.src.includes('.gif')) {
-			  setImmediate(function () {
-				convertMediaToCDN();
-				replaceURLs();
-				checkForGridLayout();
-				centerImageBecauseRegularCSSWillNot();
-				setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
-			  });
+	function callback(mutationsList, observer) {
+		for (const mutation of mutationsList) {
+			if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+				const addedImages = Array.from(mutation.addedNodes).flatMap((node) =>
+				node.querySelectorAll
+				? Array.from(node.querySelectorAll(SELECTOR_IMG_SRC))
+				: []
+			);
+
+			addedImages.forEach((image) => {
+				if (!image.src.includes('.gif')) {
+				setImmediate(processImageSrc);
+				}
+			});
+			} else if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
+			if (!mutation.target.src.includes('.gif')) {
+				processImageSrc();
+				enhanceAvatarQuality();
+				enhanceIconQuality();
 			}
-		  });
-		} else if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
-		  if (!mutation.target.src.includes('.gif')) {
-			convertMediaToCDN();
-			replaceURLs();
-			checkForGridLayout();
-			centerImageBecauseRegularCSSWillNot();
-			setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
-		  }
+			}
 		}
-	  }
 	}
 
 	function checkForGridLayout() {
@@ -271,6 +293,8 @@
 	    convertMediaToCDN();
 	    replaceURLs();
 	    checkForGridLayout();
+		enhanceAvatarQuality();
+		enhanceIconQuality();
 	    setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
 	    localObserver.observe(document, config);
 
@@ -294,7 +318,7 @@
 	this.mutationObserver = localObserver;
 
 	/**
-	* Version 3.13 of Uncompressed Images
+	* Version 3.14 of Uncompressed Images
 	* Copyright (Boost Software License 1.0) 2023-2023 Knew
 	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 	*/

@@ -32,10 +32,15 @@ This is compatible with BetterDiscord as a plugin and/or can be executed in the 
 
 <br>
 
-### Final comments:
+### Final Comments:
 Something to note with these comparisons is that unless open the image in a browser, you will *never* see the original, uncompressed image; it is *always* a lightly or heavily compressed (depends on the format) version of the original. 
 
 This means that if you click on the image, even though the quality is a bit better, it is still compressed and not what the person sent, this is most prevelant with JPEG and WebP-- hence the examples provided.
+
+----------------------------------------------------
+
+### Help:
+Need help? Join the [support server](https://discord.gg/NqqqzajfK4) (NqqqzajfK4).
 
 ----------------------------------------------------
 

@@ -1,55 +1,55 @@
 /**
- * @name Uncompressed Images
- * @author Knew
- * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
- * @version 3.14
- * @authorId 332116671294734336
- * @authorLink https://github.com/Knewest
- * @invite NqqqzajfK4
- * @website https://twitter.com/KnewestLSEP
- * @source https://github.com/Knewest/uncompressed-discord-images
- * @updateUrl https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/main/UncompressedImages.plugin.js
- */
+* @name Uncompressed Images
+* @author Knew
+* @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
+* @version 3.15
+* @authorId 332116671294734336
+* @authorLink https://github.com/Knewest
+* @invite NqqqzajfK4
+* @website https://twitter.com/KnewestLSEP
+* @source https://github.com/Knewest/uncompressed-discord-images
+* @updateUrl https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/main/UncompressedImages.plugin.js
+*/
 
 	function debounce(func, wait) {
-	  let timeout;
-	  return function(...args) {
-		const context = this;
-		clearTimeout(timeout);
-		timeout = setTimeout(() => func.apply(context, args), wait);
-	  };
+		let timeout;
+		return function(...args) {
+			const context = this;
+			clearTimeout(timeout);
+			timeout = setTimeout(() => func.apply(context, args), wait);
+		};
 	}
 
-	module.exports = class UncompressedImages {
-	  constructor() {
-		this.observer = null;
-		this.resizeListener = null;
-		this.animationFrame = null;
-	  }
-	  
+module.exports = class UncompressedImages {
+		constructor() {
+			this.observer = null;
+			this.resizeListener = null;
+			this.animationFrame = null;
+		}
+
 start() {
-		  
+
 	const config = {
-	  attributes: true,
-	  childList: true,
-	  subtree: true,
-	  attributeFilter: ['src'],
+		attributes: true,
+		childList: true,
+		subtree: true,
+		attributeFilter: ['src'],
 	};
 
 	const localObserver = new MutationObserver(callback);
 
 	function centerImageBecauseRegularCSSWillNot() {
-	  const updateImagePositions = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-grid-layout');
+		const updateImagePositions = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-grid-layout');
 
-	  updateImagePositions.forEach((image) => {
-		const container = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout');
-		if (container && image) {
-		  const containerHeight = container.clientHeight;
-		  const imageHeight = image.clientHeight;
-		  const translateY = (containerHeight - imageHeight) / 2;
-		  image.style.transform = `translateY(${translateY}px)`;
-		}
-	  });
+		updateImagePositions.forEach((image) => {
+			const container = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout');
+			if (container && image) {
+				const containerHeight = container.clientHeight;
+				const imageHeight = image.clientHeight;
+				const translateY = (containerHeight - imageHeight) / 2;
+				image.style.transform = `translateY(${translateY}px)`;
+			}
+		});
 	}
 
 	function enhanceAvatarQuality() {
@@ -59,7 +59,7 @@ start() {
 		avatarURLs.forEach((image) => {
 			let newSrc = image.src.replace(/\?size=\d*/, '');
 			if (!newSrc.includes('?quality=lossless')) {
-			  newSrc += '?quality=lossless';
+				newSrc += '?quality=lossless';
 			}
 			image.src = newSrc;
 			image.classList.add('processed-avatar');
@@ -73,7 +73,7 @@ start() {
 		iconURLs.forEach((image) => {
 			let newSrc = image.src.replace(/\?size=\d*/, '');
 			if (!newSrc.includes('?quality=lossless')) {
-			  newSrc += '?quality=lossless';
+				newSrc += '?quality=lossless';
 			}
 			image.src = newSrc;
 			image.classList.add('processed-icon');
@@ -83,22 +83,22 @@ start() {
 	function adjustMaxWidthBasedOnCurrentWidth() {
 		const imgElements = Array.from(document.querySelectorAll(".imageWrapper-oMkQl4.embedWrapper-1MtIDg.lazyImg-ewiNCh.attachmentContentItem-UKeiCx.processed-single-layout"));
 
-		  function processNextImage(index) {
-			if (index >= imgElements.length) {
-			  return;
-			}
+			function processNextImage(index) {
+				if (index >= imgElements.length) {
+					return;
+				}
 
 			const imgElement = imgElements[index];
 			if (!imgElement.classList.contains("max-width-adjusted")) {
-			  const style = window.getComputedStyle(imgElement);
-			  let currentWidth = style.getPropertyValue('width');
-			  if (currentWidth === "0px") currentWidth = "auto";	
-			  imgElement.style.maxWidth = currentWidth;
-			  imgElement.classList.add("max-width-adjusted");
-			  /** console.log(`Adjusted max-width for image to ${currentWidth}`); **/
+				const style = window.getComputedStyle(imgElement);
+				let currentWidth = style.getPropertyValue('width');
+				if (currentWidth === "0px") currentWidth = "auto";	
+				imgElement.style.maxWidth = currentWidth;
+				imgElement.classList.add("max-width-adjusted");
+				/** console.log(`Adjusted max-width for image to ${currentWidth}`); **/
 			}
 			setTimeout(() => processNextImage(index + 1), 5);
-		  }
+			}
 		processNextImage(0);
 	}
 
@@ -107,94 +107,96 @@ start() {
 	function convertMediaToCDN() {
 		const mediaURLs = document.querySelectorAll(SELECTOR_IMG_SRC);
 		mediaURLs.forEach((image) => {
+			if (!image.classList.contains('gif-2kTiNB')) {
 			image.src = image.src.replace(
-			'https://media.discordapp.net/attachments',
-			'https://cdn.discordapp.com/attachments'
+				'https://media.discordapp.net/attachments',
+				'https://cdn.discordapp.com/attachments'
 			);
 			image.classList.add('processed-image');
+			}
 		});
 	}
 
 	function replaceURLs() {
-	  const messages = document.querySelectorAll('.container-2sjPya');
-	  messages.forEach((message) => {
-		const images = message.querySelectorAll('.imageDetails-1t6Zms');
-		if (images.length === 1) {
-		  const image = images[0];
-		  image.style.display = 'inline-table';
-		  image.style.transform = 'translateX(5px) translateY(-0px)';
-		  image.style.lineHeight = 'unset';
-		  
-		  const parent = image.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx');
-		  if (parent) {
+		const messages = document.querySelectorAll('.container-2sjPya');
+			messages.forEach((message) => {
+			const images = message.querySelectorAll('.imageDetails-1t6Zms');
+				if (images.length === 1) {
+					const image = images[0];
+					image.style.display = 'inline-table';
+					image.style.transform = 'translateX(5px) translateY(-0px)';
+					image.style.lineHeight = 'unset';
+					
+					const parent = image.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx');
+		if (parent) {
 			parent.appendChild(image);
-		  }
+		}
 		} else if (images.length > 1) {
-		  images.forEach((image) => {
-			image.style.display = 'none';
-		  });
+				images.forEach((image) => {
+					image.style.display = 'none';
+				});
 		}
 	});
 
 	const mediaURLs = document.querySelectorAll(SELECTOR_IMG_SRC);
-	  let index = 0;
-	  function processImage() {
-		const image = mediaURLs[index];
-		if (image && !image.src.includes('.gif')) {
-		  const newSrc = image.src.replace(
-			'https://media.discordapp.net/attachments',
-			'https://cdn.discordapp.com/attachments'
-		  );
-		  const offscreenImage = new Image();
-		  offscreenImage.src = newSrc;
-		  offscreenImage.onload = function () {
+		let index = 0;
+		function processImage() {
+			const image = mediaURLs[index];
+			if (image && !image.src.includes('.gif')) {
+				const newSrc = image.src.replace(
+					'https://media.discordapp.net/attachments',
+					'https://cdn.discordapp.com/attachments'
+				);
+	const offscreenImage = new Image();
+	offscreenImage.src = newSrc;
+	offscreenImage.onload = function () {
 			try {
-			  const aspectRatio = offscreenImage.naturalWidth / offscreenImage.naturalHeight;
-			  const maxWidth = image.closest('.imageWrapper-oMkQl4').clientWidth;
-			  const maxHeight = image.closest('.imageWrapper-oMkQl4').clientHeight;
-			  let width = offscreenImage.naturalWidth;
-			  let height = offscreenImage.naturalHeight;
-			  if (width > maxWidth) {
+			const aspectRatio = offscreenImage.naturalWidth / offscreenImage.naturalHeight;
+			const maxWidth = image.closest('.imageWrapper-oMkQl4').clientWidth;
+			const maxHeight = image.closest('.imageWrapper-oMkQl4').clientHeight;
+			let width = offscreenImage.naturalWidth;
+			let height = offscreenImage.naturalHeight;
+			if (width > maxWidth) {
 				width = maxWidth;
 				height = width / aspectRatio;
-			  }
-			  if (height > maxHeight) {
+			}
+			if (height > maxHeight) {
 				height = maxHeight;
 				width = height * aspectRatio;
-			  }
-			  image.src = newSrc;
-			  image.classList.add('processed-image');
-			  image.style.width = `${width}px`;
-			} finally {
-			  index++;
-			  if (index < mediaURLs.length && !image.src.includes('.gif')) {
-                this.animationFrame = requestAnimationFrame(processImage);
 			}
-		 };
-	  }
+			image.src = newSrc;
+			image.classList.add('processed-image');
+			image.style.width = `${width}px`;
+			} finally {
+			index++;
+			if (index < mediaURLs.length && !image.src.includes('.gif')) {
+				this.animationFrame = requestAnimationFrame(processImage);
+			}
+		};
 	}
-	    this.animationFrame = requestAnimationFrame(processImage);
-    }
+	}
+		this.animationFrame = requestAnimationFrame(processImage);
+	}
 
-	  let images = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-single-layout');
-	  images.forEach((image) => {
+	let images = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-single-layout');
+	images.forEach((image) => {
 		image.addEventListener('load', function () {
-		  const classElement = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout');
-		  if (classElement && image.naturalWidth > image.naturalHeight) {
+		const classElement = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout');
+		if (classElement && image.naturalWidth > image.naturalHeight) {
 			classElement.classList.add('auto-width');
-		  }
+		}
 		});
-	  });
+	});
 	}
 
-    this.resizeListener = window.addEventListener('resize', debounce(centerImageBecauseRegularCSSWillNot, 100));
+	this.resizeListener = window.addEventListener('resize', debounce(centerImageBecauseRegularCSSWillNot, 100));
 
 	function processImageSrc() {
-	  convertMediaToCDN();
-	  replaceURLs();
-	  checkForGridLayout();
-	  centerImageBecauseRegularCSSWillNot();
-	  setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
+	convertMediaToCDN();
+	replaceURLs();
+	checkForGridLayout();
+	centerImageBecauseRegularCSSWillNot();
+	setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
 	}
 
 	function callback(mutationsList, observer) {
@@ -222,40 +224,40 @@ start() {
 	}
 
 	function checkForGridLayout() {
-	  const messages = document.querySelectorAll('.container-2sjPya');
-	  messages.forEach((message) => {
+	const messages = document.querySelectorAll('.container-2sjPya');
+	messages.forEach((message) => {
 		const elements = message.querySelectorAll('.lazyImg-ewiNCh, .imageContainer-10XenG, .lazyImgContainer-3k3gRy, .imageWrapper-oMkQl4, .imageContent-3Av-9c');
 		const imageElements = message.querySelectorAll('.lazyImg-ewiNCh');
 		if (imageElements.length > 1) {
-		  elements.forEach((element) => {
+		elements.forEach((element) => {
 			element.classList.add('processed-grid-layout');
-		  });
+		});
 		} else if (imageElements.length === 1) {
-		  elements.forEach((element) => {
+		elements.forEach((element) => {
 			element.classList.add('processed-single-layout');
-		  });
+		});
 		}
-	  });
+	});
 	}
 
 	function createUncompressedImagesCSSStyle() {
-	  const style = document.createElement('style');
-	  style.textContent = `
+	const style = document.createElement('style');
+	style.textContent = `
 
 		.mediaAttachmentsContainer-1WGRWy {
 			width: initial !important;
 		}	
-	  
+	
 		.auto-width {
-            width: auto !important;
-	        height: auto !important;
+			width: auto !important;
+			height: auto !important;
 			max-width: 550px !important;
 		}		
 		
 		.auto-width img {
-	        max-height: 350px !important;
+			max-height: 350px !important;
 		}
-	  
+	
 		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout {
 			margin: initial !important;
 		}
@@ -306,29 +308,29 @@ start() {
 			background-color: rgba(255, 255, 255, 0);
 		}
 
-	  `;
-	  document.head.appendChild(style);
-	  return style;
+	`;
+	document.head.appendChild(style);
+	return style;
 	}
 
 	function runMutation() {
-	    convertMediaToCDN();
-	    replaceURLs();
-	    checkForGridLayout();
+		convertMediaToCDN();
+		replaceURLs();
+		checkForGridLayout();
 		enhanceAvatarQuality();
 		enhanceIconQuality();
-	    setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
-	    localObserver.observe(document, config);
+		setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
+		localObserver.observe(document, config);
 
-	    let images = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-single-layout');
-	    images.forEach((image) => {
+		let images = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-single-layout');
+		images.forEach((image) => {
 		image.addEventListener('load', function () {
-		    const classElement = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout');
-		    if (classElement && image.naturalWidth > image.naturalHeight) {
+			const classElement = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout');
+			if (classElement && image.naturalWidth > image.naturalHeight) {
 			classElement.classList.add('auto-width');
-		  }
+		}
 		});
-	  });
+	});
 	}
 
 	runMutation();
@@ -338,11 +340,11 @@ start() {
 	}
 	
 	this.mutationObserver = localObserver;
-	   
-	  /** 
-	  Main code ends here, don't forget. 
-	  That "}" is attached to the "start () {" function.
-	  */
+	
+	/** 
+	Main code ends here, don't forget. 
+	That "}" is attached to the "start () {" function.
+	*/
 
 } stop() {
 	if (this.mutationObserver) {
@@ -353,12 +355,12 @@ start() {
 		autoWidthElements.forEach((element) => {
 			element.classList.remove('auto-width');
 		});
-  
-  		const maxWidthAdjustedImages = document.querySelectorAll('.max-width-adjusted');
+
+		const maxWidthAdjustedImages = document.querySelectorAll('.max-width-adjusted');
 		maxWidthAdjustedImages.forEach((image) => {
 			image.classList.remove('max-width-adjusted');
 		}); 
-  
+
 		const processedAvatars = document.querySelectorAll('.processed-avatar');
 		processedAvatars.forEach((image) => {
 			image.src = image.src.replace('?quality=lossless', '');
@@ -370,7 +372,7 @@ start() {
 			image.src = image.src.replace('?quality=lossless', '');
 			image.classList.remove('processed-icon');
 		});
-  
+
 		const processedImages = document.querySelectorAll('.processed-image');
 		processedImages.forEach((image) => {
 			image.src = image.src.replace(
@@ -387,7 +389,7 @@ start() {
 			hiddenImages.forEach((image) => {
 				image.style.removeProperty('display');
 				image.style.removeProperty('transform');
-		        image.style.lineHeight = '16px';
+				image.style.lineHeight = '16px';
 				image.style.display = '';
 			});
 
@@ -405,7 +407,7 @@ start() {
 				this.UncompressedImagesCSSStyle.remove();
 				this.UncompressedImagesCSSStyle = null;
 			}
-		  
+		
 			if (this.resizeListener) {
 				window.removeEventListener('resize', this.resizeListener);
 				this.resizeListener = null;
@@ -421,21 +423,22 @@ start() {
 			});
 			
 			if (this.animationFrame) {
-			  cancelAnimationFrame(this.animationFrame);
-			  this.animationFrame = null;
+			cancelAnimationFrame(this.animationFrame);
+			this.animationFrame = null;
 			}
 			
 			if (this.resizeListener) {
-			  window.removeEventListener('resize', debounce(centerImageBecauseRegularCSSWillNot, 100));
-			  this.resizeListener = null;
+			window.removeEventListener('resize', debounce(centerImageBecauseRegularCSSWillNot, 100));
+			this.resizeListener = null;
 			}
 			
 		}
-	  }
-	};
+}
+};
 
-	/**
-	* Version 3.14 of Uncompressed Images
-	* Copyright (Boost Software License 1.0) 2023-2023 Knew
-	* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
-	*/
+/**
+* Version 3.15 of Uncompressed Images
+* Copyright (Boost Software License 1.0) 2023-2023 Knew
+* Link to plugin: https://github.com/Knewest/uncompressed-discord-images
+* Support server: https://discord.gg/NqqqzajfK4
+*/

@@ -44,6 +44,6 @@ Need help? Join the [support server](https://discord.gg/NqqqzajfK4) (NqqqzajfK4)
 
 ----------------------------------------------------
 
-### Here is a guide on how to make BetterDiscord as easy as possible to install and use:
-https://gist.github.com/Knewest/ee59d3960e18e6d813c9221b54b36ab1 <br>
-<sub>Please follow the regular installation procedure if you do not understand: https://betterdiscord.app/</sub>
+### Simplifying BetterDiscord:
+For a guide on making BetterDiscord easier to install and use, check out this link: https://gist.github.com/Knewest/ee59d3960e18e6d813c9221b54b36ab1 <br>
+<sub>If you find this challenging, please follow the regular installation procedure: https://betterdiscord.app/</sub>

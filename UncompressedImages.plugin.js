@@ -2,7 +2,7 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
-* @version 3.15
+* @version 3.16
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
@@ -102,7 +102,7 @@ start() {
 		processNextImage(0);
 	}
 
-	const SELECTOR_IMG_SRC = '.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer-10XenG img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
+	const SELECTOR_IMG_SRC = '.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer-10XenG img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
 
 	function convertMediaToCDN() {
 		const mediaURLs = document.querySelectorAll(SELECTOR_IMG_SRC);
@@ -437,8 +437,15 @@ start() {
 };
 
 /**
-* Version 3.15 of Uncompressed Images
+* Version 3.16 of 'Uncompressed Images'
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 * Support server: https://discord.gg/NqqqzajfK4
+*
+* @changelog {banner} https://cdn.discordapp.com/attachments/753561208073879642/1134847376541106176/output_animation8.webp
+* @changelog {blurb} Missed or want to know previous changelogs? Find them [here](https://github.com/Knewest/embed-more-images/releases).
+* @changelog {fixed.item} The modal is not correctly positioned. Sorry this took so long to address.
+* @changelog {added.title} What I changed
+* @changelog {added.item} Resolved plugin conflicts with 'ImageZoom' by Syncxv.
+* @changelog {footer} Need help? Join my the [support server (NqqqzajfK4)](https://discord.gg/NqqqzajfK4).
 */

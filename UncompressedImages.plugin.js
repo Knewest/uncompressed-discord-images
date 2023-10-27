@@ -2,7 +2,7 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
-* @version 3.16
+* @version 3.17
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
@@ -39,10 +39,10 @@ start() {
 	const localObserver = new MutationObserver(callback);
 
 	function centerImageBecauseRegularCSSWillNot() {
-		const updateImagePositions = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-grid-layout');
+		const updateImagePositions = document.querySelectorAll('.imageContainer__04362 .lazyImg_dafbb7.processed-image.processed-grid-layout');
 
 		updateImagePositions.forEach((image) => {
-			const container = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout');
+			const container = image.closest('.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-grid-layout');
 			if (container && image) {
 				const containerHeight = container.clientHeight;
 				const imageHeight = image.clientHeight;
@@ -54,7 +54,7 @@ start() {
 
 	function enhanceAvatarQuality() {
 		const avatarURLs = document.querySelectorAll(
-		'img.avatar-2e8lTP[src^="https://cdn.discordapp.com/avatars"]:not(.processed-avatar), img.avatar-31d8He[src^="https://cdn.discordapp.com/avatars"]:not(.processed-avatar)'
+		'img.avatar__08316[src^="https://cdn.discordapp.com/avatars"]:not(.processed-avatar), img.avatar__991e2[src^="https://cdn.discordapp.com/avatars"]:not(.processed-avatar)'
 		);
 		avatarURLs.forEach((image) => {
 			let newSrc = image.src.replace(/\?size=\d*/, '');
@@ -68,7 +68,7 @@ start() {
 	
 	function enhanceIconQuality() {
 		const iconURLs = document.querySelectorAll(
-		'img.icon-3AqZ2e[src^="https://cdn.discordapp.com/icons/"]:not(.processed-icon)'
+		'img.icon__0cbed[src^="https://cdn.discordapp.com/icons/"]:not(.processed-icon)'
 		);
 		iconURLs.forEach((image) => {
 			let newSrc = image.src.replace(/\?size=\d*/, '');
@@ -81,7 +81,7 @@ start() {
 	}
 
 	function adjustMaxWidthBasedOnCurrentWidth() {
-		const imgElements = Array.from(document.querySelectorAll(".imageWrapper-oMkQl4.embedWrapper-1MtIDg.lazyImg-ewiNCh.attachmentContentItem-UKeiCx.processed-single-layout"));
+		const imgElements = Array.from(document.querySelectorAll(".imageWrapper_fd6587.embedWrapper_c143d9.lazyImg_dafbb7.attachmentContentItem_ef9fc2.processed-single-layout"));
 
 			function processNextImage(index) {
 				if (index >= imgElements.length) {
@@ -102,12 +102,12 @@ start() {
 		processNextImage(0);
 	}
 
-	const SELECTOR_IMG_SRC = '.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer-2lfOPe img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer-10XenG img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
+	const SELECTOR_IMG_SRC = '.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer_d5a653 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer__04362 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
 
 	function convertMediaToCDN() {
 		const mediaURLs = document.querySelectorAll(SELECTOR_IMG_SRC);
 		mediaURLs.forEach((image) => {
-			if (!image.classList.contains('gif-2kTiNB')) {
+			if (!image.classList.contains('gif__2aa16')) {
 			image.src = image.src.replace(
 				'https://media.discordapp.net/attachments',
 				'https://cdn.discordapp.com/attachments'
@@ -118,7 +118,7 @@ start() {
 	}
 
 	function replaceURLs() {
-		const messages = document.querySelectorAll('.container-2sjPya');
+		const messages = document.querySelectorAll('.container_dbadf5');
 			messages.forEach((message) => {
 			const images = message.querySelectorAll('.imageDetails-1t6Zms');
 				if (images.length === 1) {
@@ -127,7 +127,7 @@ start() {
 					image.style.transform = 'translateX(5px) translateY(-0px)';
 					image.style.lineHeight = 'unset';
 					
-					const parent = image.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx');
+					const parent = image.closest('.imageContent__24964.embedWrapper_c143d9.attachmentContentContainer_e8d7a1.attachmentContentItem_ef9fc2');
 		if (parent) {
 			parent.appendChild(image);
 		}
@@ -152,8 +152,8 @@ start() {
 	offscreenImage.onload = function () {
 			try {
 			const aspectRatio = offscreenImage.naturalWidth / offscreenImage.naturalHeight;
-			const maxWidth = image.closest('.imageWrapper-oMkQl4').clientWidth;
-			const maxHeight = image.closest('.imageWrapper-oMkQl4').clientHeight;
+			const maxWidth = image.closest('.imageWrapper_fd6587').clientWidth;
+			const maxHeight = image.closest('.imageWrapper_fd6587').clientHeight;
 			let width = offscreenImage.naturalWidth;
 			let height = offscreenImage.naturalHeight;
 			if (width > maxWidth) {
@@ -178,10 +178,10 @@ start() {
 		this.animationFrame = requestAnimationFrame(processImage);
 	}
 
-	let images = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-single-layout');
+	let images = document.querySelectorAll('.imageContainer__04362 .lazyImg_dafbb7.processed-image.processed-single-layout');
 	images.forEach((image) => {
 		image.addEventListener('load', function () {
-		const classElement = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout');
+		const classElement = image.closest('.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-single-layout');
 		if (classElement && image.naturalWidth > image.naturalHeight) {
 			classElement.classList.add('auto-width');
 		}
@@ -224,10 +224,10 @@ start() {
 	}
 
 	function checkForGridLayout() {
-	const messages = document.querySelectorAll('.container-2sjPya');
+	const messages = document.querySelectorAll('.container_dbadf5');
 	messages.forEach((message) => {
-		const elements = message.querySelectorAll('.lazyImg-ewiNCh, .imageContainer-10XenG, .lazyImgContainer-3k3gRy, .imageWrapper-oMkQl4, .imageContent-3Av-9c');
-		const imageElements = message.querySelectorAll('.lazyImg-ewiNCh');
+		const elements = message.querySelectorAll('.lazyImg_dafbb7, .imageContainer__04362, .lazyImgContainer__68fa8, .imageWrapper_fd6587, .imageContent__24964');
+		const imageElements = message.querySelectorAll('.lazyImg_dafbb7');
 		if (imageElements.length > 1) {
 		elements.forEach((element) => {
 			element.classList.add('processed-grid-layout');
@@ -244,7 +244,7 @@ start() {
 	const style = document.createElement('style');
 	style.textContent = `
 
-		.mediaAttachmentsContainer-1WGRWy {
+		.mediaAttachmentsContainer_edba75 {
 			width: initial !important;
 		}	
 	
@@ -258,29 +258,29 @@ start() {
 			max-height: 350px !important;
 		}
 	
-		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout {
+		.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-single-layout {
 			margin: initial !important;
 		}
 		
-		.clickableWrapper-2WTAkL {
+		.clickableWrapper__64072 {
 			height: none !important;
 		}
 		
-		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout {
+		.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-grid-layout {
 			display: -webkit-box !important;
 		}
 		
-		.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx.processed-single-layout {
+		.imageContent__24964.embedWrapper_c143d9.attachmentContentContainer_e8d7a1.attachmentContentItem_ef9fc2.processed-single-layout {
 			height: auto !important;
 			width: auto !important;
 			max-width: 550px !important;		
 		}
 
-		.imageWrapper-oMkQl4.embedWrapper-1MtIDg.lazyImg-ewiNCh.attachmentContentItem-UKeiCx.processed-single-layout {
+		.imageWrapper_fd6587.embedWrapper_c143d9.lazyImg_dafbb7.attachmentContentItem_ef9fc2.processed-single-layout {
 			width: auto !important;
 		}
 			
-		.lazyImg-ewiNCh.processed-image.processed-grid-layout {
+		.lazyImg_dafbb7.processed-image.processed-grid-layout {
 			aspect-ratio: unset !important;
 			display: grid !important;
 			width: auto !important;
@@ -288,15 +288,15 @@ start() {
 			object-fit: cover !important;
 		}
 		
-		.lazyImg-ewiNCh processed-image processed-single-layout {
+		.lazyImg_dafbb7 processed-image processed-single-layout {
 			max-width: 550px !important;
 		}	
 	
-		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-grid-layout {
+		.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-grid-layout {
 			max-width: 100% !important;
 		}
 		
-		.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout {
+		.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-single-layout {
 			height: 100% !important;
 		}
 		
@@ -304,7 +304,7 @@ start() {
 			transform: translateY(2px) !important;
 		}
 
-		.spoilerContent-32CqO-.spoilerContainer-1Dl06W {
+		.spoilerContent__37bfa.spoilerContainer_b653f1 {
 			background-color: rgba(255, 255, 255, 0);
 		}
 
@@ -322,10 +322,10 @@ start() {
 		setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
 		localObserver.observe(document, config);
 
-		let images = document.querySelectorAll('.imageContainer-10XenG .lazyImg-ewiNCh.processed-image.processed-single-layout');
+		let images = document.querySelectorAll('.imageContainer__04362 .lazyImg_dafbb7.processed-image.processed-single-layout');
 		images.forEach((image) => {
 		image.addEventListener('load', function () {
-			const classElement = image.closest('.imageWrapper-oMkQl4.imageZoom-3yLCXY.clickable-LksVCf.lazyImgContainer-3k3gRy.processed-single-layout');
+			const classElement = image.closest('.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-single-layout');
 			if (classElement && image.naturalWidth > image.naturalHeight) {
 			classElement.classList.add('auto-width');
 		}
@@ -383,7 +383,7 @@ start() {
 			});
 
 			const hiddenImages = document.querySelectorAll(
-				'.messageListItem-ZZ7v6g .imageDetails-1t6Zms'
+				'.messageListItem__6a4fb .imageDetails-1t6Zms'
 			);
 			
 			hiddenImages.forEach((image) => {
@@ -415,8 +415,8 @@ start() {
 			
 			const imageDetailsElements = document.querySelectorAll('.imageDetails-1t6Zms');
 			imageDetailsElements.forEach((element) => {
-				const commonParent = element.closest('.imageContent-3Av-9c.embedWrapper-1MtIDg.attachmentContentContainer-3WAhvQ.attachmentContentItem-UKeiCx');
-				const targetParent = commonParent.querySelector('.imageContainer-10XenG div');
+				const commonParent = element.closest('.imageContent__24964.embedWrapper_c143d9.attachmentContentContainer_e8d7a1.attachmentContentItem_ef9fc2');
+				const targetParent = commonParent.querySelector('.imageContainer__04362 div');
 				if (targetParent) {
 					targetParent.appendChild(element);
 				}
@@ -437,7 +437,7 @@ start() {
 };
 
 /**
-* Version 3.16 of 'Uncompressed Images'
+* Version 3.17 of 'Uncompressed Images'
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 * Support server: https://discord.gg/NqqqzajfK4

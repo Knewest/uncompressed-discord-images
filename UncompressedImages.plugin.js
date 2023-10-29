@@ -2,7 +2,7 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG and WebP and other lossy formats).
-* @version 3.17
+* @version 3.18
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
@@ -102,7 +102,7 @@ start() {
 		processNextImage(0);
 	}
 
-	const SELECTOR_IMG_SRC = '.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer_d5a653 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer__04362 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
+	const SELECTOR_IMG_SRC = '.zoomLens_uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer_d5a653 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer__04362 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
 
 	function convertMediaToCDN() {
 		const mediaURLs = document.querySelectorAll(SELECTOR_IMG_SRC);
@@ -120,7 +120,7 @@ start() {
 	function replaceURLs() {
 		const messages = document.querySelectorAll('.container_dbadf5');
 			messages.forEach((message) => {
-			const images = message.querySelectorAll('.imageDetails-1t6Zms');
+			const images = message.querySelectorAll('.imageDetails_1t6Zms');
 				if (images.length === 1) {
 					const image = images[0];
 					image.style.display = 'inline-table';
@@ -300,7 +300,7 @@ start() {
 			height: 100% !important;
 		}
 		
-		.cursorPointer-B3uwDA {
+		.cursorPointer_B3uwDA {
 			transform: translateY(2px) !important;
 		}
 
@@ -383,7 +383,7 @@ start() {
 			});
 
 			const hiddenImages = document.querySelectorAll(
-				'.messageListItem__6a4fb .imageDetails-1t6Zms'
+				'.messageListItem__6a4fb .imageDetails_1t6Zms'
 			);
 			
 			hiddenImages.forEach((image) => {
@@ -413,7 +413,7 @@ start() {
 				this.resizeListener = null;
 			}  
 			
-			const imageDetailsElements = document.querySelectorAll('.imageDetails-1t6Zms');
+			const imageDetailsElements = document.querySelectorAll('.imageDetails_1t6Zms');
 			imageDetailsElements.forEach((element) => {
 				const commonParent = element.closest('.imageContent__24964.embedWrapper_c143d9.attachmentContentContainer_e8d7a1.attachmentContentItem_ef9fc2');
 				const targetParent = commonParent.querySelector('.imageContainer__04362 div');
@@ -437,7 +437,7 @@ start() {
 };
 
 /**
-* Version 3.17 of 'Uncompressed Images'
+* Version 3.18 of 'Uncompressed Images'
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 * Support server: https://discord.gg/NqqqzajfK4

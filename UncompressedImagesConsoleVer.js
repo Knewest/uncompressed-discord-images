@@ -80,7 +80,7 @@
 		processNextImage(0);
 	}
 
-	const SELECTOR_IMG_SRC = '.zoomLens-uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer_d5a653 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer__04362 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
+	const SELECTOR_IMG_SRC = '.zoomLens_uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer_d5a653 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer__04362 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
 
 	function convertMediaToCDN() {
 		const mediaURLs = document.querySelectorAll(SELECTOR_IMG_SRC);
@@ -98,7 +98,7 @@
 	function replaceURLs() {
 		const messages = document.querySelectorAll('.container_dbadf5');
 			messages.forEach((message) => {
-			const images = message.querySelectorAll('.imageDetails-1t6Zms');
+			const images = message.querySelectorAll('.imageDetails_1t6Zms');
 				if (images.length === 1) {
 					const image = images[0];
 					image.style.display = 'inline-table';
@@ -278,7 +278,7 @@
 			height: 100% !important;
 		}
 		
-		.cursorPointer-B3uwDA {
+		.cursorPointer_B3uwDA {
 			transform: translateY(2px) !important;
 		}
 
@@ -318,9 +318,104 @@
 	}
 	
 	this.mutationObserver = localObserver;
+	
+	/** 
+	Main code ends here, don't forget. 
+	That "}" is attached to the "start () {" function.
+	*/
+
+} stop() {
+	if (this.mutationObserver) {
+		this.mutationObserver.disconnect();
+		this.mutationObserver = null; 
+
+		const autoWidthElements = document.querySelectorAll('.auto-width');
+		autoWidthElements.forEach((element) => {
+			element.classList.remove('auto-width');
+		});
+
+		const maxWidthAdjustedImages = document.querySelectorAll('.max-width-adjusted');
+		maxWidthAdjustedImages.forEach((image) => {
+			image.classList.remove('max-width-adjusted');
+		}); 
+
+		const processedAvatars = document.querySelectorAll('.processed-avatar');
+		processedAvatars.forEach((image) => {
+			image.src = image.src.replace('?quality=lossless', '');
+			image.classList.remove('processed-avatar');
+		});
+		
+		const processedIcons = document.querySelectorAll('.processed-icon');
+		processedIcons.forEach((image) => {
+			image.src = image.src.replace('?quality=lossless', '');
+			image.classList.remove('processed-icon');
+		});
+
+		const processedImages = document.querySelectorAll('.processed-image');
+		processedImages.forEach((image) => {
+			image.src = image.src.replace(
+				'https://cdn.discordapp.com/attachments',
+				'https://media.discordapp.net/attachments'
+			);
+				image.classList.remove('processed-image');
+			});
+
+			const hiddenImages = document.querySelectorAll(
+				'.messageListItem__6a4fb .imageDetails_1t6Zms'
+			);
+			
+			hiddenImages.forEach((image) => {
+				image.style.removeProperty('display');
+				image.style.removeProperty('transform');
+				image.style.lineHeight = '16px';
+				image.style.display = '';
+			});
+
+			const singleLayoutImages = document.querySelectorAll('.processed-single-layout');
+				singleLayoutImages.forEach((image) => {
+				image.classList.remove('processed-single-layout');
+			});
+
+			const gridImages = document.querySelectorAll('.processed-grid-layout');
+				gridImages.forEach((image) => {
+				image.classList.remove('processed-grid-layout');
+			});
+
+			if (this.UncompressedImagesCSSStyle) {
+				this.UncompressedImagesCSSStyle.remove();
+				this.UncompressedImagesCSSStyle = null;
+			}
+		
+			if (this.resizeListener) {
+				window.removeEventListener('resize', this.resizeListener);
+				this.resizeListener = null;
+			}  
+			
+			const imageDetailsElements = document.querySelectorAll('.imageDetails_1t6Zms');
+			imageDetailsElements.forEach((element) => {
+				const commonParent = element.closest('.imageContent__24964.embedWrapper_c143d9.attachmentContentContainer_e8d7a1.attachmentContentItem_ef9fc2');
+				const targetParent = commonParent.querySelector('.imageContainer__04362 div');
+				if (targetParent) {
+					targetParent.appendChild(element);
+				}
+			});
+			
+			if (this.animationFrame) {
+			cancelAnimationFrame(this.animationFrame);
+			this.animationFrame = null;
+			}
+			
+			if (this.resizeListener) {
+			window.removeEventListener('resize', debounce(centerImageBecauseRegularCSSWillNot, 100));
+			this.resizeListener = null;
+			}
+			
+		}
+}
+};
 
 /**
-* Version 3.17 of 'Uncompressed Images'
+* Version 3.18 of 'Uncompressed Images'
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 * Support server: https://discord.gg/NqqqzajfK4

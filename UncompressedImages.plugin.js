@@ -11,7 +11,7 @@
 * @updateUrl https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/main/UncompressedImages.plugin.js
 */
 
-	function debounce(func, wait) {
+	function debounce(func, wait) { 
 		let timeout;
 		return function(...args) {
 			const context = this;

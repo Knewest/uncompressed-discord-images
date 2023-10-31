@@ -7,8 +7,8 @@
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
 * @website https://twitter.com/KnewestLSEP
-* @source https://github.com/Knewest/Uncompressed-Discord-Images
-* @updateUrl https://raw.githubusercontent.com/Knewest/Uncompressed-Discord-Images/main/UncompressedImages.plugin.js
+* @source https://github.com/Knewest/uncompressed-discord-images
+* @updateUrl https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/main/UncompressedImages.plugin.js
 */
 
 	function debounce(func, wait) {

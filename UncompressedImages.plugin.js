@@ -2,16 +2,16 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG 1, WebP, and other lossy formats).
-* @version 3.19
+* @version 3.20
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
 * @website https://twitter.com/KnewestLSEP
-* @source https://github.com/Knewest/uncompressed-discord-images
-* @updateUrl https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/main/UncompressedImages.plugin.js
+* @source https://github.com/Knewest/Uncompressed-Discord-Images
+* @updateUrl https://raw.githubusercontent.com/Knewest/Uncompressed-Discord-Images/main/UncompressedImages.plugin.js
 */
 
-	function debounce(func, wait) { 
+	function debounce(func, wait) {
 		let timeout;
 		return function(...args) {
 			const context = this;
@@ -66,6 +66,18 @@ start() {
 		});
 	}
 	
+	function imagesExternalLinks() {
+		const imgElements = document.querySelectorAll('img');
+		imgElements.forEach(img => {
+			const externalLink = /^(https:\/\/images-ext-2\.discordapp\.net\/external\/[^\/]+\/https\/[^?]+)\?.+$/;
+			const match = img.src.match(externalLink);
+			if (match) {
+				img.src = match[1] + '?';
+				img.classList.add('processed-external-link');
+			}
+		});
+	}
+
 	function enhanceIconQuality() {
 		const iconURLs = document.querySelectorAll(
 		'img.icon__0cbed[src^="https://cdn.discordapp.com/icons/"]:not(.processed-icon)'
@@ -227,6 +239,7 @@ start() {
 				processImageSrc();
 				enhanceAvatarQuality();
 				enhanceIconQuality();
+				imagesExternalLinks();
 			}
 			}
 		}
@@ -350,6 +363,7 @@ start() {
 		replaceURLs();
 		enhanceAvatarQuality();
 		enhanceIconQuality();
+		imagesExternalLinks();
 		setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
 		localObserver.observe(document, config);
 	}
@@ -388,17 +402,24 @@ start() {
         this.animationFrame = null;
     }
 
-    const revertClassesAndStyles = (selector, className, srcRegex, srcReplacement) => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach((element) => {
-            if (element) {
-                element.classList.remove(className);
-                if (srcRegex && srcReplacement) {
-                    element.src = element.src.replace(srcRegex, srcReplacement);
-                }
-            }
-        });
-    };
+	const revertClassesAndStyles = (selector, className, srcRegex, srcReplacement, appendQuery) => {
+		const elements = document.querySelectorAll(selector);
+		elements.forEach((element) => {
+			if (element) {
+				element.classList.remove(className);
+				if (srcRegex && srcReplacement) {
+					element.src = element.src.replace(srcRegex, srcReplacement);
+				}
+				if (appendQuery) {
+					if (element.src.includes('?')) {
+						element.src += '&' + appendQuery;
+					} else {
+						element.src += '?' + appendQuery;
+					}
+				}
+			}
+		});
+	};	
 
     revertClassesAndStyles('.auto-width', 'auto-width');
     revertClassesAndStyles('.max-width-adjusted', 'max-width-adjusted');
@@ -407,6 +428,7 @@ start() {
     revertClassesAndStyles('.processed-image', 'processed-image', /https:\/\/cdn\.discordapp\.com\/attachments/, 'https:\/\/media.discordapp.net\/attachments');
     revertClassesAndStyles('.processed-single-layout', 'processed-single-layout');
     revertClassesAndStyles('.processed-grid-layout', 'processed-grid-layout');
+	revertClassesAndStyles('.processed-external-link', 'processed-external-link', null, null, 'format=webp');
 
     const removeLoadEventListener = (selector) => {
         const images = document.querySelectorAll(selector);
@@ -448,7 +470,7 @@ start() {
 };
 
 /**
-* Version 3.19 of 'Uncompressed Images'.
+* Version 3.20 of 'Uncompressed Images'.
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/Uncompressed-Discord-Images
 * Support server: https://discord.gg/NqqqzajfK4

@@ -1,3 +1,12 @@
+	function debounce(func, wait) {
+		let timeout;
+		return function(...args) {
+			const context = this;
+			clearTimeout(timeout);
+			timeout = setTimeout(() => func.apply(context, args), wait);
+		};
+	}	
+
 	const config = {
 		attributes: true,
 		childList: true,
@@ -35,6 +44,18 @@
 		});
 	}
 	
+	function imagesExternalLinks() {
+		const imgElements = document.querySelectorAll('img');
+		imgElements.forEach(img => {
+			const externalLink = /^(https:\/\/images-ext-2\.discordapp\.net\/external\/[^\/]+\/https\/[^?]+)\?.+$/;
+			const match = img.src.match(externalLink);
+			if (match) {
+				img.src = match[1] + '?';
+				img.classList.add('processed-external-link');
+			}
+		});
+	}
+
 	function enhanceIconQuality() {
 		const iconURLs = document.querySelectorAll(
 		'img.icon__0cbed[src^="https://cdn.discordapp.com/icons/"]:not(.processed-icon)'
@@ -196,6 +217,7 @@
 				processImageSrc();
 				enhanceAvatarQuality();
 				enhanceIconQuality();
+				imagesExternalLinks();
 			}
 			}
 		}
@@ -319,6 +341,7 @@
 		replaceURLs();
 		enhanceAvatarQuality();
 		enhanceIconQuality();
+		imagesExternalLinks();
 		setTimeout(adjustMaxWidthBasedOnCurrentWidth, 3000);
 		localObserver.observe(document, config);
 	}

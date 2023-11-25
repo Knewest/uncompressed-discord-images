@@ -47,7 +47,7 @@
 	function imagesExternalLinks() {
 		const imgElements = document.querySelectorAll('img');
 		imgElements.forEach(img => {
-			const externalLink = /^(https:\/\/images-ext-2\.discordapp\.net\/external\/[^\/]+\/https\/[^?]+)\?.+$/;
+			const externalLink = /^(https:\/\/images-ext-\d+\.discordapp\.net\/external\/[^\/]+\/https\/[^?]+)\?.+$/;
 			const match = img.src.match(externalLink);
 			if (match) {
 				img.src = match[1] + '?';

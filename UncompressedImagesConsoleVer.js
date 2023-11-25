@@ -355,7 +355,7 @@
 	this.mutationObserver = localObserver;
 
 /**
-* Version 3.19 of 'Uncompressed Images'
+* Version 3.20 of 'Uncompressed Images'
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 * Support server: https://discord.gg/NqqqzajfK4

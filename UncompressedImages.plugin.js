@@ -2,7 +2,7 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG 1, WebP, and other lossy formats).
-* @version 3.22
+* @version 3.21
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
@@ -43,7 +43,7 @@ start() {
 		twoByTwoGridElements.forEach(element => {
 			element.classList.remove('twoByTwoGrid__47ed7');
 			element.classList.add('threeByThreeGrid_d2750c');
-			element.style.gridTemplateColumns = "repeat(2, 1fr)";
+			element.style.gridTemplateColumns = "repeat(4, 1fr)";
 
 			addClassToChildren(element, 'oneByTwoSoloItem__42516');
 		});
@@ -64,121 +64,76 @@ start() {
 	}
 
 	function adjustHeightBasedOnNearestVerticalResolution() {
-		let debounceTimer;
-		const debounceDelay = 2000;
-	
-		const resizeObserver = new ResizeObserver(entries => {
-			const reversedEntries = Array.from(entries).reverse();
-			let delay = 0;
-	
-			reversedEntries.forEach(entry => {
-				setTimeout(() => {
-					const element = entry.target;
-					const nearestGridItem = element.closest('.oneByTwoGridItem_fc18a9, .oneByTwoGrid__44b90.oneByTwoLayoutThreeGrid__5ec2c .oneByTwoSoloItem__42516, .twoByOneGridItem__3d797, .oneByOneGrid__02495.oneByOneGridMosaic_afe3ca, .threeByThreeGrid_d2750c .oneByTwoSoloItem__42516, .oneByTwoGrid__44b90 .oneByTwoGridItem_fc18a9');
-					if (nearestGridItem) {
-						const renderedHeight = nearestGridItem.getBoundingClientRect().height;
-						if (renderedHeight >= 10) {
-							element.style.height = `${renderedHeight}px`;
-						}
-					}
-				}, delay);
-				delay += 25;
-			});
-	
-			clearTimeout(debounceTimer);
-			debounceTimer = setTimeout(() => {
-				centerImageUponWindowResize();
-			}, debounceDelay);
+		const elementsToAdjust = document.querySelectorAll('.clickableWrapper__64072, .loadingOverlay__4d818');
+		elementsToAdjust.forEach(element => {
+			let nearestGridItem = element.closest('.oneByTwoGridItem_fc18a9, .oneByTwoGrid__44b90.oneByTwoLayoutThreeGrid__5ec2c .oneByTwoSoloItem__42516, .twoByOneGridItem__3d797, .oneByOneGrid__02495.oneByOneGridMosaic_afe3ca, .threeByThreeGrid_d2750c .oneByTwoSoloItem__42516, .oneByTwoGrid__44b90 .oneByTwoGridItem_fc18a9'); // Killing myself if Discord changes how these are named. - Knew
+			if (nearestGridItem) {
+				element.style.height = `${nearestGridItem.clientHeight}px`;
+			}
 		});
-	
-		const elementsToObserve = document.querySelectorAll('.clickableWrapper__64072, .loadingOverlay__4d818');
-		elementsToObserve.forEach(element => {
-			resizeObserver.observe(element);
-	
-			setTimeout(() => {
-				resizeObserver.unobserve(element);
-			}, 2000);
-		});
-	}	
+	}
 
 	function centerImageBecauseRegularCSSWillNot() {
 		const updateImagePositions = document.querySelectorAll('.imageContainer__04362 .lazyImg_dafbb7.processed-image.processed-grid-layout:not(.uncompressedImagesCentered)');
-		const imagesArray = Array.from(updateImagePositions).reverse();
-		let delay = 0;
-	
-		imagesArray.forEach((image) => {
-			setTimeout(() => {
-				const container = image.closest('.oneByTwoGridItem_fc18a9, .oneByTwoGrid__44b90.oneByTwoLayoutThreeGrid__5ec2c .oneByTwoSoloItem__42516, .oneByTwoSoloItem__42516, .twoByOneGridItem__3d797, .oneByTwoSoloItem__42516, .oneByOneGrid__02495.oneByOneGridMosaic_afe3ca, .oneByTwoGrid__44b90 .oneByTwoGridItem_fc18a9');
-				if (container && image) {
-					if (container.matches('.threeByThreeGrid_d2750c .oneByTwoSoloItem__42516')) {
-						container.style.maxHeight = '175px';
-						image.classList.add('uncompressedImagesCentered');
-					} 
-					const containerHeight = container.clientHeight;
-					const originalImageHeight = image.clientHeight;
-					const scaleFactor = Math.max(1, containerHeight / originalImageHeight);
-	
+
+		updateImagePositions.forEach((image) => {
+			const container = image.closest('.oneByTwoGridItem_fc18a9, .oneByTwoGrid__44b90.oneByTwoLayoutThreeGrid__5ec2c .oneByTwoSoloItem__42516, .oneByTwoSoloItem__42516, .twoByOneGridItem__3d797, .oneByTwoSoloItem__42516, .oneByOneGrid__02495.oneByOneGridMosaic_afe3ca, .threeByThreeGrid_d2750c .oneByTwoSoloItem__42516, .oneByTwoGrid__44b90 .oneByTwoGridItem_fc18a9');
+			if (container && image) {
+				const containerHeight = container.clientHeight;
+				const originalImageHeight = image.clientHeight;
+				const imageWidth = image.clientWidth;
+
+				if (imageWidth > originalImageHeight) {
+
+					const scaleFactor = containerHeight / originalImageHeight;
 					image.style.transform = `scale(${scaleFactor})`;
 					image.style.transformOrigin = 'top';
 					image.offsetHeight;
-	
-					const scaledImageHeight = scaleFactor === 1 ? originalImageHeight : originalImageHeight * scaleFactor;
+
+					const scaledImageHeight = originalImageHeight * scaleFactor;
 					const translateY = (containerHeight - scaledImageHeight) / 2;
 					image.style.transform += ` translateY(${translateY}px)`;
-	
-					image.classList.add('uncompressedImagesCentered');
-					
+
+				} else {
+					const translateY = (containerHeight - originalImageHeight) / 2;
+					image.style.transform = `translateY(${translateY}px)`;
+					image.style.transformOrigin = 'center';
 				}
-			}, delay);
-			delay += 100;
+				image.classList.add('uncompressedImagesCentered');
+			}
 		});
-	
-		setTimeout(adjustHeightBasedOnNearestVerticalResolution, 10);
-		setTimeout(centerImageUponWindowResize, 2000);
-	}	
-	
+		setTimeout(adjustHeightBasedOnNearestVerticalResolution, 200);
+	}
+
 	function centerImageUponWindowResize() {
-		const updateImagePositions = document.querySelectorAll('.imageContainer__04362 .lazyImg_dafbb7.processed-image.processed-grid-layout');
-		const imagesArray = Array.from(updateImagePositions).reverse();
-		let delay = 0;
-	
-		imagesArray.forEach((image) => {
-			setTimeout(() => {
-				const container = image.closest('.oneByTwoGridItem_fc18a9, .oneByTwoGrid__44b90.oneByTwoLayoutThreeGrid__5ec2c .oneByTwoSoloItem__42516, .oneByTwoSoloItem__42516, .twoByOneGridItem__3d797, .oneByTwoSoloItem__42516, .oneByOneGrid__02495.oneByOneGridMosaic_afe3ca, .oneByTwoGrid__44b90 .oneByTwoGridItem_fc18a9');
-				if (container && image) {
-					if (container.matches('.threeByThreeGrid_d2750c .oneByTwoSoloItem__42516')) {
-						const containerHeight = container.clientHeight;
-						const originalImageHeight = image.clientHeight;
-						const scaleFactor = Math.max(1, containerHeight / originalImageHeight);
-		
-						image.style.transform = `scale(${scaleFactor})`;
-						image.style.transformOrigin = 'top';
-						image.offsetHeight;
-		
-						const scaledImageHeight = scaleFactor === 1 ? originalImageHeight : originalImageHeight * scaleFactor;
-						const translateY = (containerHeight - scaledImageHeight) / 2;
-						image.style.transform += ` translateY(${translateY}px)`;
-						container.style.maxHeight = '175px';
-						image.classList.add('uncompressedImagesCentered');
-					} 
-					const containerHeight = container.clientHeight;
-					const originalImageHeight = image.clientHeight;
-					const scaleFactor = Math.max(1, containerHeight / originalImageHeight);
-	
+		const updateImagePositions = document.querySelectorAll('.imageContainer__04362 .lazyImg_dafbb7.processed-image.processed-grid-layout .uncompressedImagesCentered');
+
+		updateImagePositions.forEach((image) => {
+			const container = image.closest('.oneByTwoGridItem_fc18a9, .oneByTwoGrid__44b90.oneByTwoLayoutThreeGrid__5ec2c .oneByTwoSoloItem__42516, .oneByTwoSoloItem__42516, .twoByOneGridItem__3d797, .oneByTwoSoloItem__42516, .oneByOneGrid__02495.oneByOneGridMosaic_afe3ca, .threeByThreeGrid_d2750c .oneByTwoSoloItem__42516, .oneByTwoGrid__44b90 .oneByTwoGridItem_fc18a9');
+			if (container && image) {
+				const containerHeight = container.clientHeight;
+				const originalImageHeight = image.clientHeight;
+				const imageWidth = image.clientWidth;
+
+				if (imageWidth > originalImageHeight) {
+
+					const scaleFactor = containerHeight / originalImageHeight;
 					image.style.transform = `scale(${scaleFactor})`;
 					image.style.transformOrigin = 'top';
 					image.offsetHeight;
-	
-					const scaledImageHeight = scaleFactor === 1 ? originalImageHeight : originalImageHeight * scaleFactor;
+
+					const scaledImageHeight = originalImageHeight * scaleFactor;
 					const translateY = (containerHeight - scaledImageHeight) / 2;
 					image.style.transform += ` translateY(${translateY}px)`;
-	
-					image.classList.add('uncompressedImagesCentered');
-					
+
+				} else {
+					const translateY = (containerHeight - originalImageHeight) / 2;
+					image.style.transform = `translateY(${translateY}px)`;
+					image.style.transformOrigin = 'center';
 				}
-			}, delay);
-			delay += 100;
+			}
 		});
+		setTimeout(adjustHeightBasedOnNearestVerticalResolution, 200);
 	}
 
 	function enhanceAvatarQuality() {
@@ -224,18 +179,17 @@ start() {
 	const SELECTOR_IMG_SRC = '.zoomLens_uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer_d5a653 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer__04362 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
 
 	function convertMediaToCDN() {
-		const mediaURLs = Array.from(document.querySelectorAll(SELECTOR_IMG_SRC)).reverse();
-		mediaURLs.forEach((image) => {
-			if (!image.classList.contains('gif__2aa16') && !image.nextElementSibling?.classList.contains('video__4c052')) {
-				image.src = image.src.replace(
-					'https://media.discordapp.net/attachments',
-					'https://cdn.discordapp.com/attachments'
-				);
-				image.classList.add('processed-image');
-			}
-		});
-	}
-	
+		const mediaURLs = document.querySelectorAll(SELECTOR_IMG_SRC);
+			mediaURLs.forEach((image) => {
+				if (!image.classList.contains('gif__2aa16') && !image.nextElementSibling?.classList.contains('video__4c052')) {
+					image.src = image.src.replace(
+						'https://media.discordapp.net/attachments',
+						'https://cdn.discordapp.com/attachments'
+					);
+					image.classList.add('processed-image');
+				}
+			});
+		}
 
 	function replaceURLs() {
 		const messages = document.querySelectorAll('.container_dbadf5');
@@ -258,6 +212,47 @@ start() {
 		}
 	});
 
+	function processImage() {
+		const mediaURLs = document.querySelectorAll(SELECTOR_IMG_SRC);
+		mediaURLs.forEach((image, index) => {
+			if (!image.classList.contains('processed-image') && !image.src.includes('.gif')) {
+				const newSrc = image.src.replace(
+					'https://media.discordapp.net/attachments',
+					'https://cdn.discordapp.com/attachments'
+				);
+
+				const offscreenImage = new Image();
+				offscreenImage.src = newSrc;
+				offscreenImage.onload = function() {
+					try {
+						const aspectRatio = offscreenImage.naturalWidth / offscreenImage.naturalHeight;
+						const maxWidth = image.closest('.imageWrapper_fd6587').clientWidth;
+						const maxHeight = image.closest('.imageWrapper_fd6587').clientHeight;
+						let width = offscreenImage.naturalWidth;
+						let height = offscreenImage.naturalHeight;
+
+						if (width > maxWidth) {
+							width = maxWidth;
+							height = width / aspectRatio;
+						}
+
+						if (height > maxHeight) {
+							height = maxHeight;
+							width = height * aspectRatio;
+						}
+
+						image.src = newSrc;
+						image.style.width = `${width}px`;
+
+						image.classList.add('processed-image');
+					} catch (error) {
+						console.error("Uncompressed Images - Error processing image:", error);
+					}
+				};
+			}
+		});
+	}
+
 	let imagesSingle = document.querySelectorAll('.container_dbadf5 .lazyImg_dafbb7.processed-image.processed-single-layout');
 	imagesSingle.forEach((image) => {
 		image.addEventListener('load', function () {
@@ -279,14 +274,14 @@ start() {
 	});
 	}
 
-	this.resizeListener = window.addEventListener('resize', debounce(centerImageUponWindowResize, 75));
+	this.resizeListener = window.addEventListener('resize', debounce(centerImageUponWindowResize, 100));
 
 	function processImageSrc() {
 	convertMediaToCDN();
 	replaceURLs();
 	checkForGridLayout();
 	updateGridLayoutClass();
-	centerImageBecauseRegularCSSWillNot();
+	setTimeout(centerImageBecauseRegularCSSWillNot, 1000);
 	}
 
 	function callback(mutationsList, observer) {
@@ -368,6 +363,10 @@ start() {
 			
 		}
 		
+		.clickableWrapper__64072 {
+			height: none !important;
+		}
+		
 		.carouselModal_c0d5b7.zoomedCarouselModalRoot__1e2da.root_a28985.fullscreenOnMobile__96797 {
 			display: flex !important;
 			justify-content: center !important;
@@ -427,7 +426,7 @@ start() {
 		}
 
 		.threeByThreeGrid_d2750c .lazyImgContainer__68fa8, .threeByThreeGrid_d2750c .lazyImg_dafbb7 {
-			aspect-ratio: unset !important;
+
 		}
 
 		.lazyImg_dafbb7.processed-image.processed-grid-layout {
@@ -503,33 +502,6 @@ That "}" is attached to the "start () {" function.
 		this.animationFrame = null;
 	}
 
-	function removeClassFromChildren(parentElement, className) {
-		const childElements = parentElement.children;
-		for (let i = 0; i < childElements.length; i++) {
-			childElements[i].classList.remove(className);
-		}
-	}
-
-    const threeByThreeGridElements = document.querySelectorAll('.threeByThreeGrid_d2750c');
-    threeByThreeGridElements.forEach(element => {
-        element.classList.remove('threeByThreeGrid_d2750c');
-        element.classList.add('twoByTwoGrid__47ed7');
-        element.style.gridTemplateColumns = "";
-
-        removeClassFromChildren(element, 'oneByTwoSoloItem__42516');
-    });
-
-    const elementsWithAdjustedHeight = document.querySelectorAll('.clickableWrapper__64072, .loadingOverlay__4d818');
-    elementsWithAdjustedHeight.forEach(element => {
-        element.style.height = "100%";
-    });
-
-    const centeredImages = document.querySelectorAll('.imageContainer__04362 .lazyImg_dafbb7.processed-image.processed-grid-layout.uncompressedImagesCentered');
-    centeredImages.forEach(image => {
-        image.style.transform = "";
-        image.classList.remove('uncompressedImagesCentered');
-    });
-
 	const revertClassesAndStyles = (selector, className, srcRegex, srcReplacement, appendQuery) => {
 		const elements = document.querySelectorAll(selector);
 		elements.forEach((element) => {
@@ -599,7 +571,7 @@ That "}" is attached to the "start () {" function.
 };
 
 /**
-* Version 3.22 of 'Uncompressed Images'.
+* Version 3.21 of 'Uncompressed Images'.
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/Uncompressed-Discord-Images
 * Support server: https://discord.gg/NqqqzajfK4

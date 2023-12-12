@@ -27,5 +27,8 @@ If applicable, add screenshots to help explain your problem.
 Regular Discord, Canary, PTB? 
 Version too, if you know how to check.
 
+**Version of Plugin:**
+Confirm the version of the plugin.
+
 **Additional context:**
 Add any other context about the problem here.

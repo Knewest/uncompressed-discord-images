@@ -319,6 +319,10 @@
 		.pointerCover__98bf4 {
 			z-index: -9999 !important;
 		}
+
+		.pointerCover_b7f426 {
+			z-index: -9999 !important;
+		}
 		
 		.altText__6dd8b {
 			margin: .25rem 0 -0.15rem !important;

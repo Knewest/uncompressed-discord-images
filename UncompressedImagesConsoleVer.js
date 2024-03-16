@@ -316,7 +316,7 @@
 	const style = document.createElement('style');
 	style.textContent = `
 
-		.pointerCover_b7f426 {
+		.pointerCover__98bf4 {
 			z-index: -9999 !important;
 		}
 		
@@ -462,7 +462,7 @@
 	this.mutationObserver = localObserver;
 
 /**
-* Version 3.23 of 'Uncompressed Images'
+* Version 3.24 of 'Uncompressed Images'
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 * Support server: https://discord.gg/NqqqzajfK4

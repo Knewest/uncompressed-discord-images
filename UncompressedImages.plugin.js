@@ -2,7 +2,7 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG 1, WebP, and other lossy formats).
-* @version 3.23
+* @version 3.24
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
@@ -338,7 +338,7 @@ start() {
 	const style = document.createElement('style');
 	style.textContent = `
 
-		.pointerCover_b7f426 {
+		.pointerCover__98bf4 {
 			z-index: -9999 !important;
 		}
 		
@@ -605,7 +605,7 @@ That "}" is attached to the "start () {" function.
 };
 
 /**
-* Version 3.23 of 'Uncompressed Images'.
+* Version 3.24 of 'Uncompressed Images'.
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/Uncompressed-Discord-Images
 * Support server: https://discord.gg/NqqqzajfK4

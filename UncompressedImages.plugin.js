@@ -2,7 +2,7 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG 1, WebP, and other lossy formats).
-* @version 3.24
+* @version 3.25
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
@@ -39,19 +39,19 @@ start() {
 	const localObserver = new MutationObserver(callback);
 
 	function updateGridLayoutClass() {
-		const twoByTwoGridElements = document.querySelectorAll('.twoByTwoGrid__47ed7');
+		const twoByTwoGridElements = document.querySelectorAll('.twoByTwoGrid__0e231');
 		twoByTwoGridElements.forEach(element => {
-			element.classList.remove('twoByTwoGrid__47ed7');
-			element.classList.add('threeByThreeGrid_d2750c');
+			element.classList.remove('twoByTwoGrid__0e231');
+			element.classList.add('threeByThreeGrid__75d7e');
 			element.style.gridTemplateColumns = "repeat(2, 1fr)";
 
-			addClassToChildren(element, 'oneByTwoSoloItem__42516');
+			addClassToChildren(element, 'oneByTwoSoloItem_a49836');
 		});
 
-		const threeByThreeGridElements = document.querySelectorAll('.threeByThreeGrid_d2750c');
+		const threeByThreeGridElements = document.querySelectorAll('.threeByThreeGrid__75d7e');
 		threeByThreeGridElements.forEach(element => {
 			if (!element.classList.contains('original-threeByThreeGrid')) {
-				addClassToChildren(element, 'oneByTwoSoloItem__42516');
+				addClassToChildren(element, 'oneByTwoSoloItem_a49836');
 			}
 		});
 	}
@@ -74,7 +74,7 @@ start() {
 			reversedEntries.forEach(entry => {
 				setTimeout(() => {
 					const element = entry.target;
-					const nearestGridItem = element.closest('.oneByTwoGridItem_fc18a9, .oneByTwoGrid__44b90.oneByTwoLayoutThreeGrid__5ec2c .oneByTwoSoloItem__42516, .twoByOneGridItem__3d797, .oneByOneGrid__02495.oneByOneGridMosaic_afe3ca, .threeByThreeGrid_d2750c .oneByTwoSoloItem__42516, .oneByTwoGrid__44b90 .oneByTwoGridItem_fc18a9');
+					const nearestGridItem = element.closest('.oneByTwoGridItem_ec6bb4, .oneByTwoGrid__6987d.oneByTwoLayoutThreeGrid__45717 .oneByTwoSoloItem_a49836, .twoByOneGridItem_e5cf1e, .oneByOneGrid__36e03.oneByOneGridMosaic__91851, .threeByThreeGrid__75d7e .oneByTwoSoloItem_a49836, .oneByTwoGrid__6987d .oneByTwoGridItem_ec6bb4');
 					if (nearestGridItem) {
 						const renderedHeight = nearestGridItem.getBoundingClientRect().height;
 						if (renderedHeight >= 10) {
@@ -91,7 +91,7 @@ start() {
 			}, debounceDelay);
 		});
 	
-		const elementsToObserve = document.querySelectorAll('.clickableWrapper__64072, .loadingOverlay__4d818');
+		const elementsToObserve = document.querySelectorAll('.clickableWrapper__2d2ea, .loadingOverlay__35a04');
 		elementsToObserve.forEach(element => {
 			resizeObserver.observe(element);
 	
@@ -102,15 +102,15 @@ start() {
 	}	
 
 	function centerImageBecauseRegularCSSWillNot() {
-		const updateImagePositions = document.querySelectorAll('.imageContainer__04362 .lazyImg_dafbb7.processed-image.processed-grid-layout:not(.uncompressedImagesCentered)');
+		const updateImagePositions = document.querySelectorAll('.imageContainer__1b5e9 .lazyImg_b510a9.processed-image.processed-grid-layout:not(.uncompressedImagesCentered)');
 		const imagesArray = Array.from(updateImagePositions).reverse();
 		let delay = 0;
 	
 		imagesArray.forEach((image) => {
 			setTimeout(() => {
-				const container = image.closest('.oneByTwoGridItem_fc18a9, .oneByTwoGrid__44b90.oneByTwoLayoutThreeGrid__5ec2c .oneByTwoSoloItem__42516, .oneByTwoSoloItem__42516, .twoByOneGridItem__3d797, .oneByTwoSoloItem__42516, .oneByOneGrid__02495.oneByOneGridMosaic_afe3ca, .oneByTwoGrid__44b90 .oneByTwoGridItem_fc18a9');
+				const container = image.closest('.oneByTwoGridItem_ec6bb4, .oneByTwoGrid__6987d.oneByTwoLayoutThreeGrid__45717 .oneByTwoSoloItem_a49836, .oneByTwoSoloItem_a49836, .twoByOneGridItem_e5cf1e, .oneByTwoSoloItem_a49836, .oneByOneGrid__36e03.oneByOneGridMosaic__91851, .oneByTwoGrid__6987d .oneByTwoGridItem_ec6bb4');
 				if (container && image) {
-					if (container.matches('.threeByThreeGrid_d2750c .oneByTwoSoloItem__42516')) {
+					if (container.matches('.threeByThreeGrid__75d7e .oneByTwoSoloItem_a49836')) {
 						container.style.maxHeight = '175px';
 						image.classList.add('uncompressedImagesCentered');
 					} 
@@ -139,15 +139,15 @@ start() {
 	}	
 	
 	function centerImageUponWindowResize() {
-		const updateImagePositions = document.querySelectorAll('.imageContainer__04362 .lazyImg_dafbb7.processed-image.processed-grid-layout');
+		const updateImagePositions = document.querySelectorAll('.imageContainer__1b5e9 .lazyImg_b510a9.processed-image.processed-grid-layout');
 		const imagesArray = Array.from(updateImagePositions).reverse();
 		let delay = 0;
 	
 		imagesArray.forEach((image) => {
 			setTimeout(() => {
-				const container = image.closest('.oneByTwoGridItem_fc18a9, .oneByTwoGrid__44b90.oneByTwoLayoutThreeGrid__5ec2c .oneByTwoSoloItem__42516, .oneByTwoSoloItem__42516, .twoByOneGridItem__3d797, .oneByTwoSoloItem__42516, .oneByOneGrid__02495.oneByOneGridMosaic_afe3ca, .oneByTwoGrid__44b90 .oneByTwoGridItem_fc18a9');
+				const container = image.closest('.oneByTwoGridItem_ec6bb4, .oneByTwoGrid__6987d.oneByTwoLayoutThreeGrid__45717 .oneByTwoSoloItem_a49836, .oneByTwoSoloItem_a49836, .twoByOneGridItem_e5cf1e, .oneByTwoSoloItem_a49836, .oneByOneGrid__36e03.oneByOneGridMosaic__91851, .oneByTwoGrid__6987d .oneByTwoGridItem_ec6bb4');
 				if (container && image) {
-					if (container.matches('.threeByThreeGrid_d2750c .oneByTwoSoloItem__42516')) {
+					if (container.matches('.threeByThreeGrid__75d7e .oneByTwoSoloItem_a49836')) {
 						const containerHeight = container.clientHeight;
 						const originalImageHeight = image.clientHeight;
 						const scaleFactor = Math.max(1, containerHeight / originalImageHeight);
@@ -210,7 +210,7 @@ start() {
 
 	function enhanceIconQuality() {
 		const iconURLs = document.querySelectorAll(
-		'img.icon__0cbed[src^="https://cdn.discordapp.com/icons/"]:not(.processed-icon)'
+		'img.icon__11cf1[src^="https://cdn.discordapp.com/icons/"]:not(.processed-icon)'
 		);
 		iconURLs.forEach((image) => {
 			let newSrc = image.src.replace(/\?size=\d*/, '');
@@ -222,12 +222,12 @@ start() {
 		});
 	}
 
-	const SELECTOR_IMG_SRC = '.zoomLens_uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer_d5a653 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer__04362 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
+	const SELECTOR_IMG_SRC = '.zoomLens_uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer_a2fcaa img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer__1b5e9 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
 
 	function convertMediaToCDN() {
 		const mediaURLs = Array.from(document.querySelectorAll(SELECTOR_IMG_SRC)).reverse();
 		mediaURLs.forEach((image) => {
-			if (!image.classList.contains('gif__2aa16') && !image.nextElementSibling?.classList.contains('video__4c052')) {
+			if (!image.classList.contains('gif__2aa16') && !image.nextElementSibling?.classList.contains('video__83189')) {
 				image.src = image.src.replace(
 					'https://media.discordapp.net/attachments',
 					'https://cdn.discordapp.com/attachments'
@@ -239,7 +239,7 @@ start() {
 	
 
 	function replaceURLs() {
-		const messages = document.querySelectorAll('.container_dbadf5');
+		const messages = document.querySelectorAll('.container__62863');
 			messages.forEach((message) => {
 			const images = message.querySelectorAll('.imageDetails_1t6Zms');
 				if (images.length === 1) {
@@ -248,7 +248,7 @@ start() {
 					image.style.transform = 'translateX(5px) translateY(-0px)';
 					image.style.lineHeight = 'unset';
 					
-					const parent = image.closest('.imageContent__24964.embedWrapper_c143d9.attachmentContentContainer_e8d7a1.attachmentContentItem_ef9fc2');
+					const parent = image.closest('.imageContent__0fe2a.embedWrapper__47b23.attachmentContentContainer_e65e75.attachmentContentItem__47a25');
 		if (parent) {
 			parent.appendChild(image);
 		}
@@ -259,20 +259,20 @@ start() {
 		}
 	});
 
-	let imagesSingle = document.querySelectorAll('.container_dbadf5 .lazyImg_dafbb7.processed-image.processed-single-layout');
+	let imagesSingle = document.querySelectorAll('.container__62863 .lazyImg_b510a9.processed-image.processed-single-layout');
 	imagesSingle.forEach((image) => {
 		image.addEventListener('load', function () {
-		const classElement = image.closest('.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-single-layout');
+		const classElement = image.closest('.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_b0a5df.processed-single-layout');
 		if (classElement && image.naturalWidth > image.naturalHeight) {
 			classElement.classList.add('auto-width-single');
 		}		
 		});
 	});
 
-	let imagesGrid = document.querySelectorAll('.container_dbadf5 .lazyImg_dafbb7.processed-image.processed-grid-layout');
+	let imagesGrid = document.querySelectorAll('.container__62863 .lazyImg_b510a9.processed-image.processed-grid-layout');
 	imagesGrid.forEach((image) => {
 		image.addEventListener('load', function () {
-		const classElement = image.closest('.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-grid-layout');
+		const classElement = image.closest('.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_b0a5df.processed-grid-layout');
 		if (classElement && image.naturalHeight > image.naturalWidth) {
 			classElement.classList.add('auto-width-grid');
 		}		
@@ -316,10 +316,10 @@ start() {
 	}
 
 	function checkForGridLayout() {
-		const messages = document.querySelectorAll('.container_dbadf5');
+		const messages = document.querySelectorAll('.container__62863');
 		messages.forEach((message) => {
-			const elements = message.querySelectorAll('.lazyImg_dafbb7, .imageContainer__04362, .lazyImgContainer__68fa8, .imageWrapper_fd6587, .imageContent__24964');
-			const imageElements = message.querySelectorAll('.lazyImg_dafbb7');
+			const elements = message.querySelectorAll('.lazyImg_b510a9, .imageContainer__1b5e9, .lazyImgContainer_b0a5df, .imageWrapper__178ee, .imageContent__0fe2a');
+			const imageElements = message.querySelectorAll('.lazyImg_b510a9');
 			if (imageElements.length > 1) {
 			elements.forEach((element) => {
 				element.classList.remove('processed-single-layout');
@@ -338,20 +338,20 @@ start() {
 	const style = document.createElement('style');
 	style.textContent = `
 
-		.pointerCover__98bf4 {
+		.pointerCover__0b6d7 {
 			z-index: -9999 !important;
 		}
 
-		.pointerCover_b7f426 {
+		.pointerCover__5c3cc {
 			z-index: -9999 !important;
 		}
 		
-		.altText__6dd8b {
+		.altText_a57338 {
 			margin: .25rem 0 -0.15rem !important;
 			line-height: 17px !important;
 		}
 
-		.mediaAttachmentsContainer_edba75 {
+		.mediaAttachmentsContainer__242e2 {
 
 		}
 
@@ -374,31 +374,31 @@ start() {
 
 		}
 
-		.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-single-layout {
+		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_b0a5df.processed-single-layout {
 			
 		}
 		
-		.carouselModal_c0d5b7.zoomedCarouselModalRoot__1e2da.root_a28985.fullscreenOnMobile__96797 {
+		.carouselModal__7e22f.zoomedCarouselModalRoot__32ea8.root_a28985.fullscreenOnMobile__05784 {
 			display: flex !important;
 			justify-content: center !important;
 			align-items: center !important;
 		}
 
-		.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-grid-layout {
+		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_b0a5df.processed-grid-layout {
 			display: -webkit-box !important;
 		}
 		
-		.imageContent__24964.embedWrapper_c143d9.attachmentContentContainer_e8d7a1.attachmentContentItem_ef9fc2.processed-single-layout {
+		.imageContent__0fe2a.embedWrapper__47b23.attachmentContentContainer_e65e75.attachmentContentItem__47a25.processed-single-layout {
 			height: auto !important;
 			width: auto !important;
 			max-width: 550px !important;		
 		}
 
-		.imageWrapper_fd6587.embedWrapper_c143d9.lazyImg_dafbb7.attachmentContentItem_ef9fc2.processed-single-layout {
+		.imageWrapper__178ee.embedWrapper__47b23.lazyImg_b510a9.attachmentContentItem__47a25.processed-single-layout {
 			
 		}
 
-		.imageDetailsAdded_sda9Fa .imageWrapper_fd6587 {
+		.imageDetailsAdded_sda9Fa .imageWrapper__178ee {
 			height: 100% !important;
 		}
 
@@ -406,21 +406,21 @@ start() {
 			margin: 0.15rem 0 0rem !important;
 		}
 
-		.lazyImg_dafbb7.processed-image.processed-grid-layout {
+		.lazyImg_b510a9.processed-image.processed-grid-layout {
 			aspect-ratio: unset !important;
 			display: grid !important;
 			object-fit: cover !important;
 		}
 		
-		.lazyImg_dafbb7.processed-image.processed-single-layout {
+		.lazyImg_b510a9.processed-image.processed-single-layout {
 
 		}	
 
-		.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-grid-layout {
+		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_b0a5df.processed-grid-layout {
 			max-width: 100% !important;
 		}
 		
-		.imageWrapper_fd6587.imageZoom_ceab9d.clickable_dc48ac.lazyImgContainer__68fa8.processed-single-layout {
+		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_b0a5df.processed-single-layout {
 			height: 100% !important;
 		}
 		
@@ -428,23 +428,23 @@ start() {
 			transform: translateY(2px) !important;
 		}
 
-		.spoilerContent__37bfa.spoilerContainer_b653f1 {
+		.spoilerContent__383f3.spoilerContainer__89762 {
 			background-color: rgba(255, 255, 255, 0);
 		}
 
-		.loadingOverlay__4d818 {
+		.loadingOverlay__35a04 {
 			aspect-ratio: unset !important;
 		}
 
-		.threeByThreeGrid_d2750c .lazyImgContainer__68fa8, .threeByThreeGrid_d2750c .lazyImg_dafbb7 {
+		.threeByThreeGrid__75d7e .lazyImgContainer_b0a5df, .threeByThreeGrid__75d7e .lazyImg_b510a9 {
 			aspect-ratio: unset !important;
 		}
 
-		.lazyImg_dafbb7.processed-image.processed-grid-layout {
+		.lazyImg_b510a9.processed-image.processed-grid-layout {
 			min-height: auto !important;
 		}
 
-		.oneByTwoGrid__44b90 .attachmentContentContainer_e8d7a1, .oneByTwoGrid__44b90 .lazyImg_dafbb7 {
+		.oneByTwoGrid__6987d .attachmentContentContainer_e65e75, .oneByTwoGrid__6987d .lazyImg_b510a9 {
 			height: unset !important;
 		}
 	`;
@@ -458,8 +458,8 @@ start() {
 		if (styleElement) {
 			var cssText = styleElement.textContent;
 
-			var oldRule = ".imageDetailsAdded_sda9Fa .imageWrapper_fd6587 {border-radius: 8px !important;height: calc(100% - 1rem - 16px) !important;max-height: unset !important;margin-left: unset !important;}";
-			var newRule = ".imageDetailsAdded_sda9Fa .imageWrapper_fd6587 {border-radius: 8px !important;height: calc(100% - 1rem - 16px);max-height: unset !important;margin-left: unset !important;}";
+			var oldRule = ".imageDetailsAdded_sda9Fa .imageWrapper__178ee {border-radius: 8px !important;height: calc(100% - 1rem - 16px) !important;max-height: unset !important;margin-left: unset !important;}";
+			var newRule = ".imageDetailsAdded_sda9Fa .imageWrapper__178ee {border-radius: 8px !important;height: calc(100% - 1rem - 16px);max-height: unset !important;margin-left: unset !important;}";
 
 			cssText = cssText.replace(oldRule, newRule);
 
@@ -520,21 +520,21 @@ That "}" is attached to the "start () {" function.
 		}
 	}
 
-    const threeByThreeGridElements = document.querySelectorAll('.threeByThreeGrid_d2750c');
+    const threeByThreeGridElements = document.querySelectorAll('.threeByThreeGrid__75d7e');
     threeByThreeGridElements.forEach(element => {
-        element.classList.remove('threeByThreeGrid_d2750c');
-        element.classList.add('twoByTwoGrid__47ed7');
+        element.classList.remove('threeByThreeGrid__75d7e');
+        element.classList.add('twoByTwoGrid__0e231');
         element.style.gridTemplateColumns = "";
 
-        removeClassFromChildren(element, 'oneByTwoSoloItem__42516');
+        removeClassFromChildren(element, 'oneByTwoSoloItem_a49836');
     });
 
-    const elementsWithAdjustedHeight = document.querySelectorAll('.clickableWrapper__64072, .loadingOverlay__4d818');
+    const elementsWithAdjustedHeight = document.querySelectorAll('.clickableWrapper__2d2ea, .loadingOverlay__35a04');
     elementsWithAdjustedHeight.forEach(element => {
         element.style.height = "100%";
     });
 
-    const centeredImages = document.querySelectorAll('.imageContainer__04362 .lazyImg_dafbb7.processed-image.processed-grid-layout.uncompressedImagesCentered');
+    const centeredImages = document.querySelectorAll('.imageContainer__1b5e9 .lazyImg_b510a9.processed-image.processed-grid-layout.uncompressedImagesCentered');
     centeredImages.forEach(image => {
         image.style.transform = "";
         image.classList.remove('uncompressedImagesCentered');
@@ -578,10 +578,10 @@ That "}" is attached to the "start () {" function.
 		});
 	};
 
-	removeLoadEventListener('.container_dbadf5 .lazyImg_dafbb7.processed-image.processed-single-layout');
-	removeLoadEventListener('.container_dbadf5 .lazyImg_dafbb7.processed-image.processed-grid-layout');
+	removeLoadEventListener('.container__62863 .lazyImg_b510a9.processed-image.processed-single-layout');
+	removeLoadEventListener('.container__62863 .lazyImg_b510a9.processed-image.processed-grid-layout');
 
-	const imageDetails = document.querySelectorAll('.messageListItem__6a4fb .imageDetails_1t6Zms');
+	const imageDetails = document.querySelectorAll('.messageListItem__050f9 .imageDetails_1t6Zms');
 	imageDetails.forEach((image) => {
 		if (image) {
 			image.style.removeProperty('display');
@@ -594,8 +594,8 @@ That "}" is attached to the "start () {" function.
 	const imageContainers = document.querySelectorAll('.imageDetails_1t6Zms');
 	imageContainers.forEach((element) => {
 		if (element) {
-			const commonParent = element.closest('.imageContent__24964.embedWrapper_c143d9.attachmentContentContainer_e8d7a1.attachmentContentItem_ef9fc2');
-			const targetParent = commonParent ? commonParent.querySelector('.imageContainer__04362 div') : null;
+			const commonParent = element.closest('.imageContent__0fe2a.embedWrapper__47b23.attachmentContentContainer_e65e75.attachmentContentItem__47a25');
+			const targetParent = commonParent ? commonParent.querySelector('.imageContainer__1b5e9 div') : null;
 			if (targetParent) {
 				targetParent.appendChild(element);
 			}
@@ -609,7 +609,7 @@ That "}" is attached to the "start () {" function.
 };
 
 /**
-* Version 3.24 of 'Uncompressed Images'.
+* Version 3.25 of 'Uncompressed Images'.
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/Uncompressed-Discord-Images
 * Support server: https://discord.gg/NqqqzajfK4

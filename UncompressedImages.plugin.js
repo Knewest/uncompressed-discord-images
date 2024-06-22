@@ -110,13 +110,11 @@ start() {
 			setTimeout(() => {
 				const container = image.closest('.oneByTwoGridItem_df7417, .oneByTwoGrid_df7417.oneByTwoLayoutThreeGrid_df7417 .oneByTwoSoloItem_df7417, .oneByTwoSoloItem_df7417, .twoByOneGridItem_df7417, .oneByTwoSoloItem_df7417, .oneByOneGrid_df7417.oneByOneGridMosaic_df7417, .oneByTwoGrid_df7417 .oneByTwoGridItem_df7417');
 				if (container && image) {
-					if (container.matches('.threeByThreeGrid_df7417 .oneByTwoSoloItem_df7417')) {
-						container.style.maxHeight = '175px';
-						image.classList.add('uncompressedImagesCentered');
-					} 
 					const containerHeight = container.clientHeight;
 					const originalImageHeight = image.clientHeight;
-					const scaleFactor = Math.max(1, containerHeight / originalImageHeight);
+					const containerWidth = container.clientWidth;
+					const originalImageWidth = image.clientWidth;
+					const scaleFactor = Math.min(1, Math.min(containerHeight / originalImageHeight, containerWidth / originalImageWidth));
 	
 					image.style.transform = `scale(${scaleFactor})`;
 					image.style.transformOrigin = 'top';
@@ -147,24 +145,11 @@ start() {
 			setTimeout(() => {
 				const container = image.closest('.oneByTwoGridItem_df7417, .oneByTwoGrid_df7417.oneByTwoLayoutThreeGrid_df7417 .oneByTwoSoloItem_df7417, .oneByTwoSoloItem_df7417, .twoByOneGridItem_df7417, .oneByTwoSoloItem_df7417, .oneByOneGrid_df7417.oneByOneGridMosaic_df7417, .oneByTwoGrid_df7417 .oneByTwoGridItem_df7417');
 				if (container && image) {
-					if (container.matches('.threeByThreeGrid_df7417 .oneByTwoSoloItem_df7417')) {
-						const containerHeight = container.clientHeight;
-						const originalImageHeight = image.clientHeight;
-						const scaleFactor = Math.max(1, containerHeight / originalImageHeight);
-		
-						image.style.transform = `scale(${scaleFactor})`;
-						image.style.transformOrigin = 'top';
-						image.offsetHeight;
-		
-						const scaledImageHeight = scaleFactor === 1 ? originalImageHeight : originalImageHeight * scaleFactor;
-						const translateY = (containerHeight - scaledImageHeight) / 2;
-						image.style.transform += ` translateY(${translateY}px)`;
-						container.style.maxHeight = '175px';
-						image.classList.add('uncompressedImagesCentered');
-					} 
 					const containerHeight = container.clientHeight;
 					const originalImageHeight = image.clientHeight;
-					const scaleFactor = Math.max(1, containerHeight / originalImageHeight);
+					const containerWidth = container.clientWidth;
+					const originalImageWidth = image.clientWidth;
+					const scaleFactor = Math.min(1, Math.min(containerHeight / originalImageHeight, containerWidth / originalImageWidth));
 	
 					image.style.transform = `scale(${scaleFactor})`;
 					image.style.transformOrigin = 'top';
@@ -222,12 +207,12 @@ start() {
 		});
 	}
 
-	const SELECTOR_IMG_SRC = '.zoomLens_uOK8xV img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer_cd0de5 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer_cf58b5 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
+	const SELECTOR_IMG_SRC = '.zoomLens_uOK8xV img[src^="https://media.discordapp.net/attachments"], .layerContainer_cd0de5 img[src^="https://media.discordapp.net/attachments"], .imageContainer_cf58b5 img[src^="https://media.discordapp.net/attachments"], .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]';
 
 	function convertMediaToCDN() {
 		const mediaURLs = Array.from(document.querySelectorAll(SELECTOR_IMG_SRC)).reverse();
 		mediaURLs.forEach((image) => {
-			if (!image.classList.contains('gif_bad108') && !image.nextElementSibling?.classList.contains('video_f316dd')) {
+			if (!image.nextElementSibling?.classList.contains('video_f316dd')) {
 				image.src = image.src.replace(
 					'https://media.discordapp.net/attachments',
 					'https://cdn.discordapp.com/attachments'
@@ -300,17 +285,13 @@ start() {
 			);
 
 			addedImages.forEach((image) => {
-				if (!image.src.includes('.gif')) {
-					setImmediate(processImageSrc);
-				}
+				setImmediate(processImageSrc);
 			});
 			} else if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
-				if (!mutation.target.src.includes('.gif')) {
-					processImageSrc();
-					enhanceAvatarQuality();
-					enhanceIconQuality();
-					imagesExternalLinks();
-				}
+				processImageSrc();
+				enhanceAvatarQuality();
+				enhanceIconQuality();
+				imagesExternalLinks();
 			}
 		}
 	}
@@ -442,6 +423,7 @@ start() {
 
 		.lazyImg_df7417.processed-image.processed-grid-layout {
 			min-height: auto !important;
+			min-width: auto !important;
 		}
 
 		.oneByTwoGrid_df7417 .attachmentContentContainer_e65e75, .oneByTwoGrid_df7417 .lazyImg_df7417 {

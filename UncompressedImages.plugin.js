@@ -2,7 +2,7 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG 1, WebP, and other lossy formats).
-* @version 3.26
+* @version 3.27
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
@@ -91,7 +91,7 @@ start() {
 			}, debounceDelay);
 		});
 	
-		const elementsToObserve = document.querySelectorAll('.clickableWrapper__2d2ea, .loadingOverlay__35a04');
+		const elementsToObserve = document.querySelectorAll('.clickableWrapper_d4597d, .loadingOverlay_d4597d');
 		elementsToObserve.forEach(element => {
 			resizeObserver.observe(element);
 	
@@ -432,7 +432,7 @@ start() {
 			background-color: rgba(255, 255, 255, 0);
 		}
 
-		.loadingOverlay__35a04 {
+		.loadingOverlay_d4597d {
 			aspect-ratio: unset !important;
 		}
 
@@ -529,7 +529,7 @@ That "}" is attached to the "start () {" function.
         removeClassFromChildren(element, 'oneByTwoSoloItem_df7417');
     });
 
-    const elementsWithAdjustedHeight = document.querySelectorAll('.clickableWrapper__2d2ea, .loadingOverlay__35a04');
+    const elementsWithAdjustedHeight = document.querySelectorAll('.clickableWrapper_d4597d, .loadingOverlay_d4597d');
     elementsWithAdjustedHeight.forEach(element => {
         element.style.height = "100%";
     });
@@ -609,7 +609,7 @@ That "}" is attached to the "start () {" function.
 };
 
 /**
-* Version 3.26 of 'Uncompressed Images'.
+* Version 3.27 of 'Uncompressed Images'.
 * Copyright (Boost Software License 1.0) 2023-2023 Knew
 * Link to plugin: https://github.com/Knewest/Uncompressed-Discord-Images
 * Support server: https://discord.gg/NqqqzajfK4

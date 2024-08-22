@@ -2,7 +2,7 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG 1, WebP, and other lossy formats).
-* @version 3.28
+* @version 3.29
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
@@ -13,7 +13,6 @@
 * @changelog {blurb} Missed or want to know previous changelogs? Find them [here](https://github.com/Knewest/Uncompressed-Discord-Images/releases).
 * @changelog {added.title} What I changed:
 * @changelog {added.item} Updated class names using [this tool by Syndishanx](https://syndishanx.github.io/Website/Update_Classes.html).
-* @changelog {added.item} Images are now scaled properly and not using nearest scaling.
 * @changelog {footer} Need help? Join my the [support server (NqqqzajfK4)](https://discord.gg/NqqqzajfK4).
 */
 
@@ -384,7 +383,7 @@ start() {
 			
 		}
 		
-		.carouselModal_d2b9a1.zoomedCarouselModalRoot_b586d2.root_f9a4c9.fullscreenOnMobile_f9a4c9 {
+		.carouselModal_d2b9a1.zoomedCarouselModalRoot_f74404.root_f9a4c9.fullscreenOnMobile_f9a4c9 {
 			display: flex !important;
 			justify-content: center !important;
 			align-items: center !important;
@@ -434,7 +433,7 @@ start() {
 			transform: translateY(2px) !important;
 		}
 
-		.spoilerContent_a3d0f7.spoilerContainer_a3d0f7 {
+		.spoilerContent_aa9639.spoilerContainer_aa9639 {
 			background-color: rgba(255, 255, 255, 0);
 		}
 

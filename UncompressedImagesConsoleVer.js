@@ -17,19 +17,19 @@
 	const localObserver = new MutationObserver(callback);
 
 	function updateGridLayoutClass() {
-		const twoByTwoGridElements = document.querySelectorAll('.twoByTwoGrid_df7417');
+		const twoByTwoGridElements = document.querySelectorAll('.twoByTwoGrid_cda674');
 		twoByTwoGridElements.forEach(element => {
-			element.classList.remove('twoByTwoGrid_df7417');
-			element.classList.add('threeByThreeGrid_df7417');
+			element.classList.remove('twoByTwoGrid_cda674');
+			element.classList.add('threeByThreeGrid_cda674');
 			element.style.gridTemplateColumns = "repeat(2, 1fr)";
 
-			addClassToChildren(element, 'oneByTwoSoloItem_df7417');
+			addClassToChildren(element, 'oneByTwoSoloItem_cda674');
 		});
 
-		const threeByThreeGridElements = document.querySelectorAll('.threeByThreeGrid_df7417');
+		const threeByThreeGridElements = document.querySelectorAll('.threeByThreeGrid_cda674');
 		threeByThreeGridElements.forEach(element => {
 			if (!element.classList.contains('original-threeByThreeGrid')) {
-				addClassToChildren(element, 'oneByTwoSoloItem_df7417');
+				addClassToChildren(element, 'oneByTwoSoloItem_cda674');
 			}
 		});
 	}
@@ -52,7 +52,7 @@
 			reversedEntries.forEach(entry => {
 				setTimeout(() => {
 					const element = entry.target;
-					const nearestGridItem = element.closest('.oneByTwoGridItem_df7417, .oneByTwoGrid_df7417.oneByTwoLayoutThreeGrid_df7417 .oneByTwoSoloItem_df7417, .twoByOneGridItem_df7417, .oneByOneGrid_df7417.oneByOneGridMosaic_df7417, .threeByThreeGrid_df7417 .oneByTwoSoloItem_df7417, .oneByTwoGrid_df7417 .oneByTwoGridItem_df7417');
+					const nearestGridItem = element.closest('.oneByTwoGridItem_cda674, .oneByTwoGrid_cda674.oneByTwoLayoutThreeGrid_cda674 .oneByTwoSoloItem_cda674, .twoByOneGridItem_cda674, .oneByOneGrid_cda674.oneByOneGridMosaic_cda674, .threeByThreeGrid_cda674 .oneByTwoSoloItem_cda674, .oneByTwoGrid_cda674 .oneByTwoGridItem_cda674');
 					if (nearestGridItem) {
 						const renderedHeight = nearestGridItem.getBoundingClientRect().height;
 						if (renderedHeight >= 10) {
@@ -69,7 +69,7 @@
 			}, debounceDelay);
 		});
 	
-		const elementsToObserve = document.querySelectorAll('.clickableWrapper__2d2ea, .loadingOverlay__35a04');
+		const elementsToObserve = document.querySelectorAll('.clickableWrapper_d4597d, .loadingOverlay_d4597d');
 		elementsToObserve.forEach(element => {
 			resizeObserver.observe(element);
 	
@@ -80,15 +80,15 @@
 	}	
 
 	function centerImageBecauseRegularCSSWillNot() {
-		const updateImagePositions = document.querySelectorAll('.imageContainer_cf58b5 .lazyImg_df7417.processed-image.processed-grid-layout:not(.uncompressedImagesCentered)');
+		const updateImagePositions = document.querySelectorAll('.imageContainer_cf58b5 .lazyImg_cda674.processed-image.processed-grid-layout:not(.uncompressedImagesCentered)');
 		const imagesArray = Array.from(updateImagePositions).reverse();
 		let delay = 0;
 	
 		imagesArray.forEach((image) => {
 			setTimeout(() => {
-				const container = image.closest('.oneByTwoGridItem_df7417, .oneByTwoGrid_df7417.oneByTwoLayoutThreeGrid_df7417 .oneByTwoSoloItem_df7417, .oneByTwoSoloItem_df7417, .twoByOneGridItem_df7417, .oneByTwoSoloItem_df7417, .oneByOneGrid_df7417.oneByOneGridMosaic_df7417, .oneByTwoGrid_df7417 .oneByTwoGridItem_df7417');
+				const container = image.closest('.oneByTwoGridItem_cda674, .oneByTwoGrid_cda674.oneByTwoLayoutThreeGrid_cda674 .oneByTwoSoloItem_cda674, .oneByTwoSoloItem_cda674, .twoByOneGridItem_cda674, .oneByTwoSoloItem_cda674, .oneByOneGrid_cda674.oneByOneGridMosaic_cda674, .oneByTwoGrid_cda674 .oneByTwoGridItem_cda674');
 				if (container && image) {
-					if (container.matches('.threeByThreeGrid_df7417 .oneByTwoSoloItem_df7417')) {
+					if (container.matches('.threeByThreeGrid_cda674 .oneByTwoSoloItem_cda674')) {
 						container.style.maxHeight = '175px';
 						image.classList.add('uncompressedImagesCentered');
 					} 
@@ -117,15 +117,15 @@
 	}	
 	
 	function centerImageUponWindowResize() {
-		const updateImagePositions = document.querySelectorAll('.imageContainer_cf58b5 .lazyImg_df7417.processed-image.processed-grid-layout');
+		const updateImagePositions = document.querySelectorAll('.imageContainer_cf58b5 .lazyImg_cda674.processed-image.processed-grid-layout');
 		const imagesArray = Array.from(updateImagePositions).reverse();
 		let delay = 0;
 	
 		imagesArray.forEach((image) => {
 			setTimeout(() => {
-				const container = image.closest('.oneByTwoGridItem_df7417, .oneByTwoGrid_df7417.oneByTwoLayoutThreeGrid_df7417 .oneByTwoSoloItem_df7417, .oneByTwoSoloItem_df7417, .twoByOneGridItem_df7417, .oneByTwoSoloItem_df7417, .oneByOneGrid_df7417.oneByOneGridMosaic_df7417, .oneByTwoGrid_df7417 .oneByTwoGridItem_df7417');
+				const container = image.closest('.oneByTwoGridItem_cda674, .oneByTwoGrid_cda674.oneByTwoLayoutThreeGrid_cda674 .oneByTwoSoloItem_cda674, .oneByTwoSoloItem_cda674, .twoByOneGridItem_cda674, .oneByTwoSoloItem_cda674, .oneByOneGrid_cda674.oneByOneGridMosaic_cda674, .oneByTwoGrid_cda674 .oneByTwoGridItem_cda674');
 				if (container && image) {
-					if (container.matches('.threeByThreeGrid_df7417 .oneByTwoSoloItem_df7417')) {
+					if (container.matches('.threeByThreeGrid_cda674 .oneByTwoSoloItem_cda674')) {
 						const containerHeight = container.clientHeight;
 						const originalImageHeight = image.clientHeight;
 						const scaleFactor = Math.max(1, containerHeight / originalImageHeight);
@@ -162,7 +162,7 @@
 
 	function enhanceAvatarQuality() {
 		const avatarURLs = document.querySelectorAll(
-		'img.avatar_ec86aa[src^="https://cdn.discordapp.com/avatars"]:not(.processed-avatar), img.avatar_c51b4e[src^="https://cdn.discordapp.com/avatars"]:not(.processed-avatar)'
+		'img.avatar_f9f2ca[src^="https://cdn.discordapp.com/avatars"]:not(.processed-avatar), img.avatar_c51b4e[src^="https://cdn.discordapp.com/avatars"]:not(.processed-avatar)'
 		);
 		avatarURLs.forEach((image) => {
 			let newSrc = image.src.replace(/\?size=\d*/, '');
@@ -237,20 +237,20 @@
 		}
 	});
 
-	let imagesSingle = document.querySelectorAll('.container_b558d0 .lazyImg_df7417.processed-image.processed-single-layout');
+	let imagesSingle = document.querySelectorAll('.container_b558d0 .lazyImg_cda674.processed-image.processed-single-layout');
 	imagesSingle.forEach((image) => {
 		image.addEventListener('load', function () {
-		const classElement = image.closest('.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_df7417.processed-single-layout');
+		const classElement = image.closest('.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_cda674.processed-single-layout');
 		if (classElement && image.naturalWidth > image.naturalHeight) {
 			classElement.classList.add('auto-width-single');
 		}		
 		});
 	});
 
-	let imagesGrid = document.querySelectorAll('.container_b558d0 .lazyImg_df7417.processed-image.processed-grid-layout');
+	let imagesGrid = document.querySelectorAll('.container_b558d0 .lazyImg_cda674.processed-image.processed-grid-layout');
 	imagesGrid.forEach((image) => {
 		image.addEventListener('load', function () {
-		const classElement = image.closest('.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_df7417.processed-grid-layout');
+		const classElement = image.closest('.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_cda674.processed-grid-layout');
 		if (classElement && image.naturalHeight > image.naturalWidth) {
 			classElement.classList.add('auto-width-grid');
 		}		
@@ -296,8 +296,8 @@
 	function checkForGridLayout() {
 		const messages = document.querySelectorAll('.container_b558d0');
 		messages.forEach((message) => {
-			const elements = message.querySelectorAll('.lazyImg_df7417, .imageContainer_cf58b5, .lazyImgContainer_df7417, .imageWrapper__178ee, .imageContent_cf58b5');
-			const imageElements = message.querySelectorAll('.lazyImg_df7417');
+			const elements = message.querySelectorAll('.lazyImg_cda674, .imageContainer_cf58b5, .lazyImgContainer_cda674, .imageWrapper__178ee, .imageContent_cf58b5');
+			const imageElements = message.querySelectorAll('.lazyImg_cda674');
 			if (imageElements.length > 1) {
 			elements.forEach((element) => {
 				element.classList.remove('processed-single-layout');
@@ -352,17 +352,17 @@
 
 		}
 
-		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_df7417.processed-single-layout {
+		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_cda674.processed-single-layout {
 			
 		}
 		
-		.carouselModal_d2b9a1.zoomedCarouselModalRoot_b586d2.root_f9a4c9.fullscreenOnMobile_f9a4c9 {
+		.carouselModal_d2b9a1.zoomedCarouselModalRoot_f74404.root_f9a4c9.fullscreenOnMobile_f9a4c9 {
 			display: flex !important;
 			justify-content: center !important;
 			align-items: center !important;
 		}
 
-		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_df7417.processed-grid-layout {
+		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_cda674.processed-grid-layout {
 			display: -webkit-box !important;
 		}
 		
@@ -372,7 +372,7 @@
 			max-width: 550px !important;		
 		}
 
-		.imageWrapper__178ee.embedWrapper_b558d0.lazyImg_df7417.attachmentContentItem__47a25.processed-single-layout {
+		.imageWrapper__178ee.embedWrapper_b558d0.lazyImg_cda674.attachmentContentItem__47a25.processed-single-layout {
 			
 		}
 
@@ -384,21 +384,21 @@
 			margin: 0.15rem 0 0rem !important;
 		}
 
-		.lazyImg_df7417.processed-image.processed-grid-layout {
+		.lazyImg_cda674.processed-image.processed-grid-layout {
 			aspect-ratio: unset !important;
 			display: grid !important;
 			object-fit: cover !important;
 		}
 		
-		.lazyImg_df7417.processed-image.processed-single-layout {
+		.lazyImg_cda674.processed-image.processed-single-layout {
 
 		}	
 
-		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_df7417.processed-grid-layout {
+		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_cda674.processed-grid-layout {
 			max-width: 100% !important;
 		}
 		
-		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_df7417.processed-single-layout {
+		.imageWrapper__178ee.imageZoom__9528e.clickable__2869d.lazyImgContainer_cda674.processed-single-layout {
 			height: 100% !important;
 		}
 		
@@ -406,23 +406,23 @@
 			transform: translateY(2px) !important;
 		}
 
-		.spoilerContent_a3d0f7.spoilerContainer_a3d0f7 {
+		.spoilerContent_aa9639.spoilerContainer_aa9639 {
 			background-color: rgba(255, 255, 255, 0);
 		}
 
-		.loadingOverlay__35a04 {
+		.loadingOverlay_d4597d {
 			aspect-ratio: unset !important;
 		}
 
-		.threeByThreeGrid_df7417 .lazyImgContainer_df7417, .threeByThreeGrid_df7417 .lazyImg_df7417 {
+		.threeByThreeGrid_cda674 .lazyImgContainer_cda674, .threeByThreeGrid_cda674 .lazyImg_cda674 {
 			aspect-ratio: unset !important;
 		}
 
-		.lazyImg_df7417.processed-image.processed-grid-layout {
+		.lazyImg_cda674.processed-image.processed-grid-layout {
 			min-height: auto !important;
 		}
 
-		.oneByTwoGrid_df7417 .attachmentContentContainer_e65e75, .oneByTwoGrid_df7417 .lazyImg_df7417 {
+		.oneByTwoGrid_cda674 .attachmentContentContainer_e65e75, .oneByTwoGrid_cda674 .lazyImg_cda674 {
 			height: unset !important;
 		}
 	`;
@@ -465,9 +465,10 @@
 
 	this.mutationObserver = localObserver;
 
+
 /**
-* Version 3.26 of 'Uncompressed Images'
-* Copyright (Boost Software License 1.0) 2023-2023 Knew
+* Version 3.29 of 'Uncompressed Images'
+* Copyright (Boost Software License 1.0) 2023-2024 Knew
 * Link to plugin: https://github.com/Knewest/uncompressed-discord-images
 * Support server: https://discord.gg/NqqqzajfK4
 */

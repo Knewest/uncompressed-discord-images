@@ -699,12 +699,14 @@ That "}" is attached to the "start () {" function.
 }
 };
 
-/** IGNORE THIS
-* Version 3.28 of 'Uncompressed Images'.
-* Copyright (Boost Software License 1.0) 2023-2024 Knew
+/**
+* Version 3.31 of 'Uncompressed Images'.
+* Copyright (Boost Software License 1.0) 2023-2025 Knew
 * Link to plugin: https://github.com/Knewest/Uncompressed-Discord-Images
 * Support server: https://discord.gg/NqqqzajfK4
-*
+*/
+
+/** IGNORE THIS
 * @changelog {banner} https://cdn.discordapp.com/attachments/753561208073879642/1134847376541106176/output_animation8.webp
 * @changelog {blurb} Missed or want to know previous changelogs? Find them [here](https://github.com/Knewest/embed-more-images/releases).
 * @changelog {fixed.item} 

@@ -2,7 +2,7 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG 1, WebP, and other lossy formats).
-* @version 3.31
+* @version 3.32
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
@@ -11,11 +11,8 @@
 * @updateUrl https://raw.githubusercontent.com/Knewest/Uncompressed-Discord-Images/main/UncompressedImages.plugin.js
 * @changelog {banner} https://betterdiscord.app/resources/thumbnails/1284.png
 * @changelog {blurb} Missed or want to know previous changelogs? Find them [here](https://github.com/Knewest/Uncompressed-Discord-Images/releases).
-* @changelog {fixed.item} Plugin now finally supports DevilBro's 'ImageUtilites' when having "Show Image Details in the Image Description" enabled.
-* @changelog {fixed.item} Avatars and server icons are properly processed now after being broken for a while.
+* @changelog {fixed.item} Fixed the image zoom with 'ImageUtilities' by DevilBro not reliably uncompressing the image.
 * @changelog {fixed.item} Fixed up old code.
-* @changelog {added.item} Game icons under 'activites' are now processed.
-* @changelog {added.item} Updated class names using [this tool by Syndishanx](https://syndishanx.github.io/Website/Update_Classes.html).
 * @changelog {footer} Need help? Join my the [support server (NqqqzajfK4)](https://discord.gg/NqqqzajfK4).
 */
 
@@ -108,15 +105,16 @@ start() {
 	});
 
 	const elementsToObserve = document.querySelectorAll('.clickableWrapper_af017a, .loadingOverlay_af017a');
-	elementsToObserve.forEach((element) => {
-		resizeObserver.observe(element);
+		elementsToObserve.forEach((element) => {
+			resizeObserver.observe(element);
 
-		setTimeout(() => {
-			resizeObserver.unobserve(element);
-		}, 2000);
-	});
-}
-
+			setTimeout(() => {
+				resizeObserver.unobserve(element);
+			}, 2000);
+		});
+	}
+// ----------------- //
+// ----------------- //
 	function centerImageBecauseRegularCSSWillNot() {
 		const updateImagePositions = document.querySelectorAll(
 			'.imageContainer__0f481 .lazyImg_f4758a.processed-image.processed-grid-layout:not(.uncompressedImagesCentered)'
@@ -164,7 +162,7 @@ start() {
 		setTimeout(adjustHeightBasedOnNearestVerticalResolution, 4500);
 	}
 
-	function centerImageUponWindowResize() {
+	function centerImageUponWindowResize() { // Reminder: The function above is NOT the same. - Knew
 		const updateImagePositions = document.querySelectorAll(
 			'.imageContainer__0f481 .lazyImg_f4758a.processed-image.processed-grid-layout'
 		);
@@ -193,7 +191,7 @@ start() {
 
 					image.style.transform = `scale(${scaleFactor})`;
 					image.style.transformOrigin = 'top';
-					image.offsetHeight; // force reflow
+					image.offsetHeight; // Forcing the reflow - Knew
 
 					const scaledImageHeight = scaleFactor === 1 ? originalImageHeight : originalImageHeight * scaleFactor;
 					const translateY = (containerHeight - scaledImageHeight) / 2;
@@ -261,18 +259,47 @@ start() {
 	}
 // ----------------- //
 // ----------------- //
-	const SELECTOR_IMG_SRC = '.zoomLens_ac0584 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .layerContainer_da8173 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .imageContainer__0f481 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image), .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)';
+	const SELECTOR_IMG_SRC = `
+	  .zoomLens_ac0584 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image),
+	  .layerContainer_da8173 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image),
+	  .imageContainer__0f481 img[src^="https://media.discordapp.net/attachments"]:not(.processed-image),
+	  .vc-imgzoom-lens img[src^="https://media.discordapp.net/attachments"]:not(.processed-image)
+	`;
 
 	function convertMediaToCDN() {
 		const mediaURLs = Array.from(document.querySelectorAll(SELECTOR_IMG_SRC)).reverse();
-		mediaURLs.forEach((image) => {
-			if (!image.classList.contains('gif__2dc39') && !image.nextElementSibling?.classList.contains('video_f316dd')) {
+		for (const image of mediaURLs) {
+			if (
+				!image.classList.contains('gif__2dc39') &&
+				!image.closest('.video_f316dd') &&
+				!image.classList.contains('processed-image')
+			) {
 				image.src = image.src.replace(
 					'https://media.discordapp.net/attachments',
 					'https://cdn.discordapp.com/attachments'
 				);
 				image.classList.add('processed-image');
 			}
+		}
+	}
+
+	function monitorZoomLensInjection() {
+		const observer = new MutationObserver((mutations) => {
+			for (const mutation of mutations) {
+				for (const node of mutation.addedNodes) {
+					if (
+						node instanceof HTMLElement &&
+						node.classList.contains('zoomLens_ac0584')
+					) {
+						convertMediaToCDN();
+					}
+				}
+			}
+		});
+
+		observer.observe(document.body, {
+			childList: true,
+			subtree: true,
 		});
 	}
 // ----------------- //
@@ -333,80 +360,80 @@ start() {
 	}
 // ----------------- //
 // ----------------- //
-function processImageSrc() {
-	convertMediaToCDN();
-	replaceURLs();
-	checkForGridLayout();
-	updateGridLayoutClass();
-	centerImageBecauseRegularCSSWillNot();
-}
+	function processImageSrc() {
+		convertMediaToCDN();
+		replaceURLs();
+		checkForGridLayout();
+		updateGridLayoutClass();
+		centerImageBecauseRegularCSSWillNot();
+	}
 
-function callback(mutationsList, observer) {
-	const CLASS_LAZY_IMG = 'lazyImg_f4758a';
-	const SELECTOR_IMG_SRC = `.${CLASS_LAZY_IMG}`;
-	
-	for (const mutation of mutationsList) {
-		if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-			const addedImages = Array.from(mutation.addedNodes).flatMap((node) =>
-				node.querySelectorAll
-					? Array.from(node.querySelectorAll(SELECTOR_IMG_SRC))
-					: []
-			);
+	function callback(mutationsList, observer) {
+		const CLASS_LAZY_IMG = 'lazyImg_f4758a';
+		const SELECTOR_IMG_SRC = `.${CLASS_LAZY_IMG}`;
+		
+		for (const mutation of mutationsList) {
+			if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+				const addedImages = Array.from(mutation.addedNodes).flatMap((node) =>
+					node.querySelectorAll
+						? Array.from(node.querySelectorAll(SELECTOR_IMG_SRC))
+						: []
+				);
 
-			addedImages.forEach((image) => {
-				if (!image.src.includes('.gif')) {
-					setImmediate(processImageSrc);
+				addedImages.forEach((image) => {
+					if (!image.src.includes('.gif')) {
+						setImmediate(processImageSrc);
+					}
+				});
+			} else if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
+				if (!mutation.target.src.includes('.gif')) {
+					processImageSrc();
+					enhanceAvatarQuality();
+					enhanceIconQuality();
+					enhanceActivityIconQuality();
+					imagesExternalLinks();
 				}
-			});
-		} else if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
-			if (!mutation.target.src.includes('.gif')) {
-				processImageSrc();
-				enhanceAvatarQuality();
-				enhanceIconQuality();
-				enhanceActivityIconQuality();
-				imagesExternalLinks();
 			}
 		}
 	}
-}
 // ----------------- //
 // ----------------- //
-function checkForGridLayout() {
-	const CLASS_CONTAINER = 'container_b7e1cb';
-	const CLASS_IMAGE_WRAPPER = 'imageWrapper_af017a';
-	const CLASS_IMAGE_CONTAINER = 'imageContainer__0f481';
-	const CLASS_LAZY_IMG = 'lazyImg_f4758a';
-	const CLASS_LAZY_IMG_CONTAINER = 'lazyImgContainer_f4758a';
-	const CLASS_IMAGE_CONTENT = 'imageContent__0f481';
-	
-	const CLASS_PROCESSED_SINGLE = 'processed-single-layout';
-	const CLASS_PROCESSED_GRID = 'processed-grid-layout';
-	
-	const messages = document.querySelectorAll(`.${CLASS_CONTAINER}`);
-	messages.forEach((message) => {
-		const allRelatedElements = message.querySelectorAll([
-			`.${CLASS_LAZY_IMG}`,
-			`.${CLASS_IMAGE_CONTAINER}`,
-			`.${CLASS_LAZY_IMG_CONTAINER}`,
-			`.${CLASS_IMAGE_WRAPPER}`,
-			`.${CLASS_IMAGE_CONTENT}`,
-		].join(', '));
-
+	function checkForGridLayout() {
+		const CLASS_CONTAINER = 'container_b7e1cb';
+		const CLASS_IMAGE_WRAPPER = 'imageWrapper_af017a';
+		const CLASS_IMAGE_CONTAINER = 'imageContainer__0f481';
+		const CLASS_LAZY_IMG = 'lazyImg_f4758a';
+		const CLASS_LAZY_IMG_CONTAINER = 'lazyImgContainer_f4758a';
+		const CLASS_IMAGE_CONTENT = 'imageContent__0f481';
+		
+		const messages = document.querySelectorAll(`.${CLASS_CONTAINER}`);
+		messages.forEach((message) => {
+			const allRelatedElements = message.querySelectorAll([
+				`.${CLASS_LAZY_IMG}`,
+				`.${CLASS_IMAGE_CONTAINER}`,
+				`.${CLASS_LAZY_IMG_CONTAINER}`,
+				`.${CLASS_IMAGE_WRAPPER}`,
+				`.${CLASS_IMAGE_CONTENT}`,
+			].join(', '));
+			
 		const imageElements = message.querySelectorAll(`.${CLASS_LAZY_IMG}`);
-
-		if (imageElements.length > 1) {
-			allRelatedElements.forEach((element) => {
-				element.classList.remove(CLASS_PROCESSED_SINGLE);
-				element.classList.add(CLASS_PROCESSED_GRID);
-			});
-		} else if (imageElements.length === 1) {
-			allRelatedElements.forEach((element) => {
-				element.classList.remove(CLASS_PROCESSED_GRID);
-				element.classList.add(CLASS_PROCESSED_SINGLE);
-			});
-		}
-	});
-}
+		const CLASS_PROCESSED_SINGLE = 'processed-single-layout';
+		const CLASS_PROCESSED_GRID = 'processed-grid-layout';
+		
+			if (imageElements.length > 1) {
+				allRelatedElements.forEach((element) => {
+					element.classList.remove(CLASS_PROCESSED_SINGLE);
+					element.classList.add(CLASS_PROCESSED_GRID);
+				});
+			} else if (imageElements.length === 1) {
+				allRelatedElements.forEach((element) => {
+					element.classList.remove(CLASS_PROCESSED_GRID);
+					element.classList.add(CLASS_PROCESSED_SINGLE);
+				});
+			}
+		});
+	}
+// ----------------- //
 // ----------------- //
 	function createUncompressedImagesCSSStyle() {
 	const style = document.createElement('style');
@@ -546,6 +573,7 @@ function checkForGridLayout() {
 // ----------------- //
 	function runMutation() {
 		convertMediaToCDN();
+		monitorZoomLensInjection();
 		replaceURLs();
 		enhanceAvatarQuality();
 		enhanceIconQuality();
@@ -700,7 +728,7 @@ That "}" is attached to the "start () {" function.
 };
 
 /**
-* Version 3.31 of 'Uncompressed Images'.
+* Version 3.32 of 'Uncompressed Images'.
 * Copyright (Boost Software License 1.0) 2023-2025 Knew
 * Link to plugin: https://github.com/Knewest/Uncompressed-Discord-Images
 * Support server: https://discord.gg/NqqqzajfK4

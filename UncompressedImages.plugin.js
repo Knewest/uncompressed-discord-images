@@ -731,7 +731,7 @@ That "}" is attached to the "start () {" function.
 };
 
 /**
-* Version 3.32 of 'Uncompressed Images'.
+* Version 3.33 of 'Uncompressed Images'.
 * Copyright (Boost Software License 1.0) 2023-2025 Knew
 * Link to plugin: https://github.com/Knewest/Uncompressed-Discord-Images
 * Support server: https://discord.gg/NqqqzajfK4

@@ -2,7 +2,7 @@
 * @name Uncompressed Images
 * @author Knew
 * @description Discord's solution to previewing images is awful so by changing 'media.discordapp.net' links to 'cdn.discordapp.com' links, we will no longer have blurry images (especially with JPEG 1, WebP, and other lossy formats).
-* @version 3.32
+* @version 3.33
 * @authorId 332116671294734336
 * @authorLink https://github.com/Knewest
 * @invite NqqqzajfK4
@@ -11,9 +11,8 @@
 * @updateUrl https://raw.githubusercontent.com/Knewest/Uncompressed-Discord-Images/main/UncompressedImages.plugin.js
 * @changelog {banner} https://betterdiscord.app/resources/thumbnails/1284.png
 * @changelog {blurb} Missed or want to know previous changelogs? Find them [here](https://github.com/Knewest/Uncompressed-Discord-Images/releases).
-* @changelog {fixed.item} Fixed the image zoom with 'ImageUtilities' by DevilBro not reliably uncompressing the image.
-* @changelog {fixed.item} Fixed up old code.
-* @changelog {footer} Need help? Join my the [support server (NqqqzajfK4)](https://discord.gg/NqqqzajfK4).
+* @changelog {fixed.item} Added a CSS rule to prevent vertically longer videos from having the video controls hidden.
+* @changelog {footer} Need help? Join the [support server (NqqqzajfK4)](https://discord.gg/NqqqzajfK4).
 */
 
 function debounce(func, wait) {
@@ -547,6 +546,10 @@ start() {
 
 		.oneByTwoGrid_f4758a .itemContentContainer_f4758a, .oneByTwoGrid_f4758a .lazyImg_f4758a {
 			height: unset !important;
+		}
+		
+		.oneByOneGrid_f4758a {
+			max-height: unset;
 		}
 	`;
 	document.head.appendChild(style);

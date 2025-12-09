@@ -27,20 +27,20 @@ Discord is _not_ consistent with how it embeds content on the platform. When dic
 - It's lossless (in most cases), but because of the file size, it takes longer to send. 
 - Worth noting that APNG data is stripped from all uploaded PNGs (search 'aCropalypse').
 - Near instant hardware encoding.
-- The thumbnail is acceptable quality, but is resized. Pixel data is lost like this. Pure scaling is more accurate.
-- Data retention score: ⭐⭐⭐
+- The thumbnail is an acceptable quality, but is resized. Pixel data is lost like this. Pure scaling is more accurate.
+- Data retention score: ⭐⭐⭐ || 3/5
 ### JPEG 1:
 - Just don't use it. It has a "good" file size only if you destroy the quality, & has no lossless option.
 - Near instant hardware encoding.
 - The thumbnail looks blurry it alters colour information.
-- Data retention score: ⭐
+- Data retention score: ⭐ || 1/5
 ### WebP:
 - It supports lossless, & even ICC profiles. Limited to 8-BPC.
 - Smaller file size than PNG, despite the identical rendered output.
 - Slow software encoding speed, but it's not very notable. I never need to wait for it.
 - The thumbnail suffers from the same issues as JPEG 1, but WebP has a better compression algorithm.
 - `-mt -lossless -q 100 -z 7 %input -o %output`
-- Data retention score: ⭐⭐
+- Data retention score: ⭐⭐ || 2/5
 ### AVIF:
 - Supports lossless, ICC profiles, & up to 12-BPC.
 - Smaller file size than PNG, despite the identical rendered output. Particularly when tiling.
@@ -48,7 +48,7 @@ Discord is _not_ consistent with how it embeds content on the platform. When dic
 - Slower software encoding speeds. I often need to wait for it with +2K resolution images.
 - The thumbnails are rendered identically to the lossless ones. Not sure why Discord chooses to not process AVIF images at all.
 - `--lossless --depth 8 --yuv 444 --range full --jobs 14 --speed 5 --grid 2x4 "$input" "$output"`
-- Data retention score: ⭐⭐⭐⭐⭐
+- Data retention score: ⭐⭐⭐⭐⭐ || 5/5
 ## Installation:
 ### BetterDiscord:
 - [ ` WINDOWS KEY ` + ` R ` ] on your keyboard.

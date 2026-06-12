@@ -1,11 +1,11 @@
 # 'Uncompressed Images' V4 by Knewest:
-<img align="right" src="https://betterdiscord.app/resources/thumbnails/1284.png" width="450"> 
+<img align="right" src="https://betterdiscord.app/resources/thumbnails/1284" width="450"> 
 
 ### What is it?:
 This version hijacks the client cache & alters the low quality thumbnail image shown by default to the lossless version that was uploaded. V4 boasts a completely new approach that performs more similarly to native Discord, unlike V1-V3, which all infamously lagged due to excessive DOM manipulation. This version is a lot more compatible with themes, and other plugins. Primarily due to the lack of DOM manipulation (miricale I figured that out).<br>
-<a href="https://github.com/Knewest/uncompressed-discord-images/releases"><img src="https://cdn.discordapp.com/attachments/753561208073879642/1110739988712271873/DownloadButtonFromGithub.webp" alt="Release Log" style="cursor:pointer;"/></a>
-<a href="https://betterdiscord.app/Download?id=936"><img src="https://cdn.discordapp.com/attachments/753561208073879642/1110738604780691616/DownloadButtonLatestVersion.webp" alt="Latest Version" style="cursor:pointer;"/></a>
-<a href="https://github.com/Knewest/uncompressed-discord-images/blob/main/UncompressedImagesUserScript.js"><img src="https://cdn.discordapp.com/attachments/753561208073879642/1110742637771772024/ClickToUseConsoleVersionButton.webp" alt="UserScript Version" style="cursor:pointer;"/></a>
+<a href="https://github.com/Knewest/uncompressed-discord-images/releases"><img src="https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/refs/heads/main/images/DownloadButtonFromGithub.webp" alt="Release Log" style="cursor:pointer;"/></a>
+<a href="https://betterdiscord.app/Download?id=936"><img src="https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/refs/heads/main/images/DownloadButtonLatestVersion.webp" alt="Latest Version" style="cursor:pointer;"/></a>
+<a href="https://github.com/Knewest/uncompressed-discord-images/blob/main/UncompressedImagesUserScript.js"><img src="https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/refs/heads/main/images/ClickToUseConsoleVersionButton.webp" alt="UserScript Version" style="cursor:pointer;"/></a>
 <a href="https://discord.gg/NqqqzajfK4"><img src="https://cdn.discordapp.com/attachments/753561208073879642/1110742637771772024/ClickToUseConsoleVersionButton.webp" alt="Discord Server" style="cursor:pointer;"/></a>
 <br>
 <br>
@@ -53,7 +53,7 @@ Discord is _not_ consistent with how it embeds content on the platform. When dic
 ### BetterDiscord:
 - [ ` WINDOWS KEY ` + ` R ` ] on your keyboard.
 - Enter `%USERPROFIEL%\AppData\Roaming\BetterDiscord\plugins` & press 'OK'.
-- Drop `UncomrpessedImages.pluging.js` into it.<br><br>
+- Drop `UncomrpessedImages.plugin.js` into it.<br><br>
 
 ### UserScript:
 - You're likely already an advanced user, & instructions aren't streamlined.

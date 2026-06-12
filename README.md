@@ -1,5 +1,5 @@
 # 'Uncompressed Images' V4 by Knewest:
-<img align="right" src="https://betterdiscord.app/image/thumbnails/1284" width="450"> 
+<img align="right" src="https://betterdiscord.app/image/1284" width="450"> 
 
 ### What is it?:
 This version hijacks the client cache & alters the low quality thumbnail image shown by default to the lossless version that was uploaded. V4 boasts a completely new approach that performs more similarly to native Discord, unlike V1-V3, which all infamously lagged due to excessive DOM manipulation. This version is a lot more compatible with themes, and other plugins. Primarily due to the lack of DOM manipulation (miricale I figured that out).<br>

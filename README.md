@@ -1,19 +1,19 @@
 # 'Uncompressed Images' V4 by Knewest:
-<img align="right" src="https://betterdiscord.app/image/1284" width="450" alt="Thumbnail APNG"> 
+<img align="right" src="https://github.com/user-attachments/assets/b4de583e-9890-436c-8de3-2b5ade0b33a6" width="450" alt="Thumbnail APNG" style="max-width: 100%; height: auto;">
 
 ### What is it?:
-This version hijacks the client cache & alters the low quality thumbnail image shown by default to the lossless version that was uploaded. V4 boasts a completely new approach that performs more similarly to native Discord, unlike V1-V3, which all infamously lagged due to excessive DOM manipulation. This version is a lot more compatible with themes, and other plugins. Primarily due to the lack of DOM manipulation (miricale I figured that out).<br>
-<a href="https://github.com/Knewest/uncompressed-discord-images/releases"><img src="https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/refs/heads/main/images/DownloadButtonFromGithub.webp" alt="Release Log" style="cursor:pointer;"/></a>
-<a href="https://betterdiscord.app/Download?id=936"><img src="https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/refs/heads/main/images/DownloadButtonLatestVersion.webp" alt="Latest Version" style="cursor:pointer;"/></a>
-<a href="https://github.com/Knewest/uncompressed-discord-images/blob/main/UncompressedImagesUserScript.js"><img src="https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/refs/heads/main/images/ClickToUseConsoleVersionButton.webp" alt="UserScript Version" style="cursor:pointer;"/></a>
-<a href="https://discord.gg/NqqqzajfK4"><img src="https://cdn.discordapp.com/attachments/753561208073879642/1110742637771772024/ClickToUseConsoleVersionButton.webp" alt="Discord Server" style="cursor:pointer;"/></a>
+This version hijacks the client cache & alters the low quality thumbnail image shown by default to the lossless version that was uploaded. V4 boasts a completely new approach that performs more similarly to native Discord, unlike V1-V3, which all infamously lagged due to excessive DOM manipulation. This version is a lot more compatible with themes, and other plugins. Primarily due to the lack of DOM manipulation (miricale I figured that out).<br><br>
+<a href="https://github.com/Knewest/uncompressed-discord-images/releases"><img src="https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/refs/heads/main/images/DownloadButtonFromGithub.webp" alt="Release Log" style="cursor:pointer;" width="128"/></a>
+<a href="https://betterdiscord.app/Download?id=936"><img src="https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/refs/heads/main/images/DownloadButtonLatestVersion.webp" alt="Latest Version" style="cursor:pointer;" width="128"/></a>
+<a href="https://github.com/Knewest/uncompressed-discord-images/blob/main/UncompressedImagesUserScript.js"><img src="https://raw.githubusercontent.com/Knewest/uncompressed-discord-images/refs/heads/main/images/ClickToUseConsoleVersionButton.webp" alt="UserScript Version" style="cursor:pointer;" width="128"/></a>
+<a href="https://discord.gg/NqqqzajfK4"><img src="https://github.com/user-attachments/assets/769fabb1-7689-43d3-89c5-cfabfc78982f" alt="Discord Server" style="cursor:pointer;" width="32"/></a>
 <br>
 <br>
 ## Comparisons:
 |<sub>**Format:**</sub>|**Default:**|**Plugin:**| 
 |:---:|:---:|:---:|
 |**WebP**|![WebPComparisonLQ3](https://user-images.githubusercontent.com/94736474/224316809-f7af7946-d7b7-42ce-a408-8789c9b87a1d.png)|![WebPComparisonHQ3](https://user-images.githubusercontent.com/94736474/224316830-f02e485f-8330-435e-b953-cf527fc4f17c.png)|
-|**PNG**|![PNGComparisonLQ1](https://cdn.discordapp.com/attachments/753561208073879642/1101597065953431652/wVUDsCCrsD_LQ_PNG.webp)|![PNGComparisonHQ1](https://cdn.discordapp.com/attachments/753561208073879642/1101597074463674449/wVUDsCCrsD_HQ_PNG.webp)|
+|**PNG**|![PNGComparisonLQ1](https://github.com/user-attachments/assets/b1f39e8d-916c-4114-98e4-2e21ceb96eae)|![PNGComparisonHQ1](https://github.com/user-attachments/assets/d252d41d-37c7-4a67-9b79-c4155e2a80ef)|
 |**JPEG**|![JPGComparisonLQ1](https://user-images.githubusercontent.com/94736474/224312885-cb26264e-e2d0-404f-ae50-395bf81a54f1.png)|![JPGComparisonHQ1](https://user-images.githubusercontent.com/94736474/224315183-e5e5dc8b-16f7-4072-8fae-45a4ed904a21.png)|
 |**JPEG**|![JPGComparisonLQ2](https://user-images.githubusercontent.com/94736474/224315861-7ce2defa-ecaa-47be-8a14-a678aa71cc03.png)|![JPGComparisonHQ2](https://user-images.githubusercontent.com/94736474/224315883-0b9c87fa-7144-4916-ba07-67a0f5dc4c80.png)|
 |**WebP**|![WebPComparisonLQ1](https://user-images.githubusercontent.com/94736474/224316202-2410e3c6-8b3d-4784-aea8-7dee2ea36edd.png)|![WebPComparisonHQ1](https://user-images.githubusercontent.com/94736474/224316220-cb74424b-1ee3-4de7-85c4-444fa6703327.png)|
